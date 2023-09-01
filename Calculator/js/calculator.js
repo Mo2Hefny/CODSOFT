@@ -17,7 +17,7 @@ const calculator = (() => {
     let result = numbers[0];
     for (let i = 0; i < operators.length; i++)
     {
-      if (operators[i] === '*')
+      if (operators[i] === '+')
         result += numbers[i + 1];
       else
         result -= numbers[i + 1];
@@ -35,7 +35,6 @@ const calculator = (() => {
           n = mul(numbers[i], numbers[i + 1]);
         else
           n = div(numbers[i], numbers[i + 1]);
-        if (n === undefined) return;
         operators.splice(i, 1);
         numbers.splice(i, 1);
         numbers[i] = n;
@@ -45,6 +44,7 @@ const calculator = (() => {
   }
 
   const calculateSegment = (segment) => {
+    if (segment === '') return;
     console.log(segment);
     let numbersList = [];
     let operatorsList = [];

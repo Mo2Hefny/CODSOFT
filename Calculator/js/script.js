@@ -55,7 +55,7 @@ const screen = (() => {
     if (expression.justSolved)
       return flipEquation();
     const result = calculator.solve(expression.equation);
-    if (result === undefined) {
+    if (result === undefined || isNaN(result)) {
       if (error.textContent === '')
         error.textContent = 'Invalid Input.';
       return;
