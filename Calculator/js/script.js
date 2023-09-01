@@ -28,6 +28,22 @@ const screen = (() => {
   const history = document.getElementById('history');
   const error = document.getElementById('error');
   let expression = new Expression('', '');
+
+  const handleBrackets = (letter) => {
+    if (letter === '(')
+    {
+      if (expression.equation[expression.equation.length - 1] === '.')
+        popEquation();
+      if (Number.isInteger(Number(expression.equation[expression.equation.length - 1])))
+          expression.equation += '*';
+    }
+    else if (Number.isInteger(Number(letter)) || letter === '.')
+    {
+      if (expression.equation[expression.equation.length - 1] === ')')
+        expression.equation += '*';
+    }
+  }
+
   const appendEquation = (letter) => {
     if (expression.justSolved)
       expression.clear();
@@ -36,6 +52,7 @@ const screen = (() => {
       error.textContent = 'max size';
       return;
     }
+    handleBrackets(letter);
     expression.equation += letter;
     updateScreen();
   }
