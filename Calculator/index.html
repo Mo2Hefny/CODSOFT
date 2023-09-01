@@ -10,37 +10,34 @@
   <main>
     <div class="calculator" id="calculator">
       <div class="screen" id="screen">
-        <div class="history" id="history"></div>
-        <div class="equation" id="equation"></div>
-        <div class="error"></div>
+        <div class="history" id="history">
+        </div>
+        <div class="equation" id="equation">0</div>
+        <div class="error" id="error"></div>
       </div>
-      <div class="buttons">
-        <button class="secondary" id="backspace"><--</button>
-        <button class="secondary" id="opening_brackets">(</button>
-        <button class="secondary" id="closing_brackets">)</button>
-        <button class="secondary" id="mod">mod</button>
-        <button class="secondary" id="pie">pie</button>
+      <div class="buttons" id="buttons">
+        <button class="primary" id="backspace"><--</button>
+        <button class="primary" id="opening_brackets">(</button>
+        <button class="primary" id="closing_brackets">)</button>
+        <button class="primary" id="divide">/</button>
         <button class="secondary" id="7">7</button>
         <button class="secondary" id="8">8</button>
         <button class="secondary" id="9">9</button>
-        <button class="secondary" id="divide">/</button>
-        <button class="secondary" id="sqrt">sqrt</button>
+        <button class="primary" id="multiply">*</button>
         <button class="secondary" id="4">4</button>
         <button class="secondary" id="5">5</button>
         <button class="secondary" id="6">6</button>
-        <button class="secondary" id="multiply">x</button>
-        <button class="secondary" id="power">^</button>
+        <button class="primary" id="subtract">-</button>
         <button class="secondary" id="1">1</button>
         <button class="secondary" id="2">2</button>
         <button class="secondary" id="3">3</button>
-        <button class="secondary" id="subtract">-</button>
         <button class="secondary" id="0">0</button>
-        <button class="secondary" id="decimal">.</button>
-        <button class="secondary" id="percentage">%</button>
-        <button class="secondary" id="add">+</button>
-        <button class="secondary" id="equal">=</button>
+        <button class="primary" id="decimal">.</button>
+        <button class="primary" id="add">+</button>
+        <button class="primary" id="equal">=</button>
       </div>
     </div>
   </main>
+  <script type="module" src="./js/script.js"></script>
 </body>
 </html>
