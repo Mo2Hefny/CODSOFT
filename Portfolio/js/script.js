@@ -1,15 +1,25 @@
 const portfolioSections = document.querySelector('main').children;
+let  portfolioSectionsStart = [];
+updateSectionStarts();
 const scrollDownBtn = document.getElementById('scroll-down');
 const largeNavigation = document.querySelector('.large-nav');
 
-window.onscroll = function() {scrollFunction()};
+window.addEventListener("scroll", scrollFunction);
+window.addEventListener("resize", updateSectionStarts);
 scrollDownBtn.addEventListener('click', scrollDown);
+
+function updateSectionStarts() {
+  portfolioSectionsStart = [];
+  for (const section of portfolioSections)
+  {
+    portfolioSectionsStart.push(section.offsetTop);
+  }
+  console.log(`heights are: ${portfolioSectionsStart}`)
+}
 
 function scrollFunction() {
   console.log(document.body.scrollTop);
   console.log(document.documentElement.scrollTop);
-  console.log(largeNavigation.offsetHeight);
-  console.log(vhToPixels(8));
   toggleAccordingToScroll(document.querySelector('.about .separator'), 'invisible', vhToPixels(1));
   toggleAccordingToScroll(scrollDownBtn, 'light', vhToPixels(8));
   toggleAccordingToScroll(largeNavigation, 'light', vhToPixels(92));
@@ -25,21 +35,20 @@ function toggleAccordingToScroll(element, addedClass, height) {
 
 function vhToPixels (vh) {
   return Math.round(window.innerHeight / (100 / vh));
-  }
+}
 
 function scrollDown() {
-  let i = 0;
-  let found = false;
-  for (; i < portfolioSections.length; i++)
+  const scrollY = document.documentElement.scrollTop;
+  for (let i = 0; i < portfolioSections.length; i++)
   {
-    if (portfolioSections[i].classList.contains('active'))
+    if (portfolioSectionsStart[i] > scrollY + 30)
     {
-      found = true;
       console.log(portfolioSections[i]);
+      console.log(portfolioSectionsStart[i]);
+      portfolioSections[i].scrollIntoView();
       break;
     }
   }
-  if (found)
-    portfolioSections[i].scrollIntoView();
+  console.log(document.documentElement.scrollTop);
 }
 
