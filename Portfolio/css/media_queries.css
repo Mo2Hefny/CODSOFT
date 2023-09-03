@@ -21,8 +21,16 @@
     display: none;
   }
 
+  .large-nav {
+    background: transparent;
+  }
+
   .large-nav > .nav-links {
     display: none;
+  }
+
+  .small-nav {
+    display: inline-block;
   }
 
   .hero {
@@ -51,5 +59,11 @@
 
   .section > .btns-section {
     justify-content: center;
+  }
+
+  #scroll-down {
+    left: 89%;
+    translate: -50% -50%;
+    bottom: 7%;
   }
 }

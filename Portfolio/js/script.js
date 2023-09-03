@@ -3,6 +3,7 @@ let  portfolioSectionsStart = [];
 updateSectionStarts();
 const scrollDownBtn = document.getElementById('scroll-down');
 const largeNavigation = document.querySelector('.large-nav');
+const smallNavigation = document.querySelector('.small-nav');
 
 window.addEventListener("scroll", scrollFunction);
 window.addEventListener("resize", updateSectionStarts);
@@ -23,6 +24,7 @@ function scrollFunction() {
   toggleAccordingToScroll(document.querySelector('.about .separator'), 'invisible', vhToPixels(1));
   toggleAccordingToScroll(scrollDownBtn, 'light', vhToPixels(8));
   toggleAccordingToScroll(largeNavigation, 'light', vhToPixels(92));
+  toggleAccordingToScroll(smallNavigation, 'light', vhToPixels(50));
 }
 
 function toggleAccordingToScroll(element, addedClass, height) {
@@ -52,3 +54,9 @@ function scrollDown() {
   console.log(document.documentElement.scrollTop);
 }
 
+function toggleMenu() {
+  document.querySelector('.open').classList.toggle('hide');
+  document.querySelector('.close').classList.toggle('hide');
+  document.querySelector('.side-menu').classList.toggle('hide');
+  console.log('working!');
+}

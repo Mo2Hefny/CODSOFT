@@ -22,19 +22,17 @@
         <li class="standout"><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-    <nav class="small-nav">
-      <div class="logo"></div>
-      <div class="side-menu">
-        <div class="menu-icon">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+    <nav class="small-nav light">
+      <div class="menu-icon" onclick="toggleMenu()">
+        <i class="open fa-solid fa-grip-vertical fa-xl"></i>
+        <i class="close fa-solid fa-x fa-xl hide"></i>
+      </div>
+      <div class="side-menu hide">
         <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li onclick="toggleMenu()"><a href="#about">About</a></li>
+          <li onclick="toggleMenu()"><a href="#experience">Experience</a></li>
+          <li onclick="toggleMenu()"><a href="#projects">Projects</a></li>
+          <li class="standout" onclick="toggleMenu()"><a href="#contact">Contact</a></li>
         </ul>
       </div>
     </nav>
@@ -78,7 +76,7 @@
         </div>
       </div>
       <div class="about" id="about">
-        <div class="separator" onclick="location.href='./#about'">
+        <div class="separator invisible" onclick="location.href='./#about'">
           <p class="light-text">Get to know more</p>
         </div>
         <div class="section-header">
