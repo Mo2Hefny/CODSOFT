@@ -1,81 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-  />
-  <link rel="icon" href="./assets/img/portfolio.png">
-  <link rel="stylesheet" href="./css/styles.css">
-  <title>Moamen Hefny | Portfolio</title>
-</head>
-<body>
-  <nav class="large-nav light">
-    <h3 class="logo" id="name">Moamen Hefny</h3>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#">Projects</a></li>
-      <li class="standout"><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-  <nav class="small-nav">
-    <div class="logo"></div>
-    <div class="side-menu">
-      <div class="menu-icon">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <link rel="icon" href="./assets/img/portfolio.png" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/media_queries.css" />
+    <title>Moamen Hefny | Portfolio</title>
+  </head>
+  <body>
+    <nav class="large-nav light">
+      <h3 class="logo" id="name">Moamen Hefny</h3>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li class="standout"><a href="#contact">Contact</a></li>
       </ul>
-    </div>
-  </nav>
-  </header>
-  <main class="main">
-    <div class="hero">
-      <div class="hero-img"></div>
-      <div class="hero-text">
-        <div class="greeting">
-          <p>Hi, I am</p>
-          <h1 class="name">Moamen Hefny</h1>
-          <h2 class="job">Motivated student</h2>
+    </nav>
+    <nav class="small-nav">
+      <div class="logo"></div>
+      <div class="side-menu">
+        <div class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div class="btns-section">
-          <button class="btn btn-color-1" onclick="location.href='./#contact'">Contact Info</button>
-          <button class="btn btn-color-2" onclick="window.open('./assets/resume.pdf')">See Resume</button>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+    <main class="main">
+      <div class="hero">
+        <div class="hero-img"></div>
+        <div class="hero-text">
+          <div class="greeting">
+            <p>Hi, I am</p>
+            <h1 class="name">Moamen Hefny</h1>
+            <h2 class="job">Motivated student</h2>
+          </div>
+          <div class="btns-section">
+            <button
+              class="btn btn-color-1"
+              onclick="location.href='./#contact'"
+            >
+              Contact Info
+            </button>
+            <button
+              class="btn btn-color-2"
+              onclick="window.open('./assets/resume.pdf')"
+            >
+              See Resume
+            </button>
+          </div>
+          <div class="links-section">
+            <a
+              href="https://github.com/Mo2Hefny"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fa-brands fa-github fa-xl"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/mohefny04/"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fa-brands fa-linkedin fa-xl"></i
+            ></a>
+          </div>
         </div>
-        <div class="links-section">
-          <a href="https://github.com/Mo2Hefny" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github fa-xl"></i></a>
-          <a href="https://www.linkedin.com/in/mohefny04/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin fa-xl"></i></a>
+      </div>
+      <div class="about" id="about">
+        <div class="separator" onclick="location.href='./#about'">
+          <p class="light-text">Get to know more</p>
+        </div>
+        <div class="section-header">
+          <h1 class="section-title">About Me</h1>
+        </div>
+        <div class="container">
+          <div class="img"></div>
+          <div class="about-text section">
+            <h3>My name is Moamen Hefny</h3>
+            <p>
+              Hi there, I’m a computer engineering student who is passionate
+              about creating innovative and user-friendly web applications. I
+              have learned full stack web development using HTML, CSS,
+              JavaScript, React, and Node.js.<span class="excess"> I also learned C++, a powerful
+              programming language that can do almost anything. I love solving
+              problems and learning new things. You can check out some of my
+              projects and achievements on this site.</span> If you want to work with
+              me or just say hi, feel free to contact me anytime. Thanks for
+              stopping by!
+            </p>
+            <div class="btns-section">
+              <button class="btn btn-color-1" onclick="location.href='./#contact'">Contact Me!</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="about" id="about">
-      <div class="separator" onclick="location.href='./#about'">
-        <p class="light-text">Get to know more</p>
-      </div>
-      <div class="section-header">
-        <h1 class="section-title">About me</h1>
-      </div>
-      <div class="container"></div>
-    </div>
-    <div class="experience" id="experience">
-      <div class="section-header">
-        <p class="light-text">Check my</p>
-        <h1 class="section-title">Experience</h1>
-      </div>
+      <div class="experience" id="experience">
+        <div class="section-header">
+          <p class="light-text">Check my</p>
+          <h1 class="section-title">Experience</h1>
+        </div>
         <div class="container"></div>
-    </div>
-  </main>
-  <footer class="footer"></footer>
-  <button class="light" id="scroll-down"><i class="fa-solid fa-arrow-down fa-lg"></i></button>
-</body>
-<script src="./js/script.js"></script>
+      </div>
+      <div class="projects" id="projects">
+        <div class="section-header">
+          <p class="light-text">Explore my</p>
+          <h1 class="section-title">Projects</h1>
+        </div>
+        <div class="container"></div>
+      </div>
+      <div class="contact" id="contact">
+        <div class="section-header">
+          <p class="light-text">Get in touch</p>
+          <h1 class="section-title">Contact Me</h1>
+        </div>
+        <div class="container"></div>
+      </div>
+    </main>
+    <footer class="footer"></footer>
+    <button class="light" id="scroll-down">
+      <i class="fa-solid fa-arrow-down fa-lg"></i>
+    </button>
+  </body>
+  <script src="./js/script.js"></script>
 </html>

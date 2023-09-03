@@ -1,0 +1,55 @@
+@media (max-width: 60rem) {
+  .large-nav > .nav-links {
+    display: none;
+    padding: 0 5%;
+  }
+
+  .hero {
+    padding: 0 5%;
+  }
+}
+
+@media (max-width: 50rem) {
+  :root {
+    --hero: 2rem;
+    --title: 1.3rem;
+    --subtitles: 18px;
+    --p: 14px;
+  }
+
+  .excess {
+    display: none;
+  }
+
+  .large-nav > .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding: 8rem 5% 1rem 5%;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hero-img {
+    width: clamp(100px, 40%, 300px);
+  }
+
+  .btn {
+    padding: 6px 14px;
+  }
+
+  .about > .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 1rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+
+  .section > .btns-section {
+    justify-content: center;
+  }
+}
