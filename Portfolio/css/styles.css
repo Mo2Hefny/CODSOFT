@@ -56,9 +56,6 @@ body {
 }
 
 /* nav */
-nav {
-}
-
 .small-nav.light,
 .large-nav.light {
   --prim: var(--light);
@@ -247,7 +244,7 @@ nav {
   border: 4px solid var(--prim);
 }
 
-.nav-links > .standout:hover {
+.large-nav > .nav-links > .standout:hover {
   background: var(--prim);
   color: var(--sec);
 }
@@ -459,6 +456,24 @@ main > div:not(.hero) {
 
 /* Experience */
 .experience {
+}
+
+/* Contact */
+
+/* Footer */
+.footer {
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+  width: 100%;
+  height: 70px;
+  padding: 1rem 0;
+  color: var(--grey);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: var(--small);
+  background: linear-gradient(to top, #aea49e40 10%, var(--light));
 }
 
 /* buttons */
