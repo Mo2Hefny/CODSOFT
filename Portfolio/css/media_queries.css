@@ -4,6 +4,14 @@
     padding: 0 5%;
   }
 
+  .large-nav {
+    background: transparent;
+  }
+
+  .small-nav {
+    display: inline-block;
+  }
+  
   .hero {
     padding: 0 5%;
   }
@@ -20,19 +28,7 @@
   .excess {
     display: none;
   }
-
-  .large-nav {
-    background: transparent;
-  }
-
-  .large-nav > .nav-links {
-    display: none;
-  }
-
-  .small-nav {
-    display: inline-block;
-  }
-
+  
   .hero {
     padding: 8rem 5% 1rem 5%;
     flex-direction: column;

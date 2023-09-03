@@ -122,7 +122,7 @@ body {
 
 .side-menu:not(.hide) > .nav-links {
   animation-name: show-links;
-  animation-duration: 4s;
+  animation-duration: 2.3s;
   opacity: 1;
 }
 
@@ -184,7 +184,7 @@ body {
     opacity: 0;
     width: 0;
   }
-  40% {
+  30% {
     opacity: 0.05;
   }
   to {
