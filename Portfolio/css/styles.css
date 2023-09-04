@@ -234,7 +234,7 @@ body::-webkit-scrollbar {
   text-align: center;
 }
 
-.large-nav > .nav-links > li:hover {
+.large-nav > .nav-links > li:not(.standout):hover {
   background-color: #0a020140;
 }
 
@@ -242,7 +242,7 @@ body::-webkit-scrollbar {
   box-shadow: inset 1px 1px 5px #0a0201e0, inset -1px -1px 5px #fefefe30;
 }
 
-.nav-links > .standout {
+.large-nav > .nav-links > .standout {
   border: 4px solid var(--prim);
 }
 
@@ -251,7 +251,8 @@ body::-webkit-scrollbar {
   color: var(--sec, var(--light));
 }
 
-.btn-color-3:active {
+.btn-color-3:active,
+.shadow-dark-hover:hover {
   box-shadow: 0px 0px 10px var(--prim, var(--dark));
 }
 
@@ -489,6 +490,7 @@ main > div > .container {
   grid-template-columns: 40px 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 0 0.6rem;
+  padding: 4px;
 }
 
 .skill > .icon {
@@ -505,8 +507,16 @@ main > div > .container {
   gap: 2rem;
 }
 
+.projects > .container > .cover {
+  width: 100%;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
 .tag-selector {
   width: 300px;
+  margin: 0.5rem 0;
 }
 
 .tags {
@@ -514,6 +524,11 @@ main > div > .container {
   gap: 0.5rem;
   font-size: var(--small);
   font-weight: 600;
+}
+
+.tags > .active {
+  background: var(--dark);
+  color: var(--light);
 }
 
 .tags > li {
@@ -525,39 +540,19 @@ main > div > .container {
 }
 
 .media-h-scroll {
-  position: relative;
-  width: 100%;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: clamp(250px, 23%, 300px);
-  overflow-x: auto;
+  grid-auto-columns: 300px;
+  overflow-x: scroll;
   gap: 1rem;
   z-index: 50;
-}
-
-.media-h-scroll::before {
-  position: absolute;
-  height: 100%;
-  width: 100px;
-  top: 0%;
-  left: 0%;
-  content: "t";
-  background: linear-gradient(to right, #fefefe 30%, transparent);
-}
-
-.media-h-scroll::after {
-  position: absolute;
-  height: 100%;
-  width: 100px;
-  top: 0%;
-  right: 0%;
-  content: "tثسفsdawd";
-  background: linear-gradient(to left, #fefefe 30%, transparent);
+  padding: 0.5rem 1rem;
 }
 
 .scroll-snap {
   overscroll-behavior-inline: contain;
   scroll-snap-type: inline mandatory;
+  scroll-padding-inline: 1rem;
 }
 
 .scroll-snap > * {
@@ -567,12 +562,23 @@ main > div > .container {
 .projects .card {
   padding: 1rem;
   text-align: center;
+  box-shadow: 0 4px 8px #0a020140;
+  transition: 0.3s ease;
+}
+
+.projects .card:hover {
+  translate: 0 -6px;
+  box-shadow: 0px 5px 8px #0a0201;
 }
 
 .projects .card > .title {
   font-size: var(--p);
 }
 
+.card > .links-section i:hover {
+  color: var(--pop);
+  scale: 1.3;
+}
 
 
 /* Contact */
@@ -616,6 +622,13 @@ main > div > .container {
   aspect-ratio: 4 / 3;
   background-color: var(--light);
   border-radius: 1rem;
+  transition: 0.3s ease;
+}
+
+.card > img:hover {
+  scale: 105%;
+  box-shadow: 0 2px 5px #0a0201;
+  translate: 0 -3px;
 }
 
 .card > .description {
@@ -645,7 +658,7 @@ main > div > .container {
 }
 
 #scroll-down:hover {
-  background: var(--lightsecondary);
+  background: #e3581c1a;
 }
 
 .btn {
@@ -674,7 +687,8 @@ main > div > .container {
   color: var(--light);
 }
 
-.btn-color-2:hover {
+.btn-color-2:hover,
+.shadow-light-hover:hover {
   box-shadow: 0px 0px 10px var(--lightsecondary);
 }
 
@@ -728,4 +742,26 @@ main > div > .container {
 
 .section-scroller > span.active::before {
   background: #e3581c9a;
+}
+
+/* Effects */
+.btm-light {
+  transition: 0.3s ease;
+  border: 2px solid var(--light);
+  border-radius: 3px;
+}
+
+.btm-light:hover {
+  color: #e3581cea;
+  background: linear-gradient(to top, #e3581c1a 20%, transparent);
+  border-bottom: 2px solid #e3581c9a;
+}
+
+.shadow-light-hover,
+.shadow-dark-hover {
+  transition: 0.3s ease;
+}
+
+.shadow-light {
+  box-shadow: 0px 0px 5px var(--lightsecondary);
 }
