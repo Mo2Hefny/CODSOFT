@@ -1,3 +1,8 @@
+@media (max-width: 65rem) {
+  #section-scroller {
+    display: none;
+  }
+}
 @media (max-width: 60rem) {
   .large-nav > .nav-links {
     display: none;

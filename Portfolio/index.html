@@ -32,7 +32,9 @@
           <li onclick="toggleMenu()"><a href="#about">About</a></li>
           <li onclick="toggleMenu()"><a href="#experience">Experience</a></li>
           <li onclick="toggleMenu()"><a href="#projects">Projects</a></li>
-          <li class="standout" onclick="toggleMenu()"><a href="#contact">Contact</a></li>
+          <li class="standout" onclick="toggleMenu()">
+            <a href="#contact">Contact</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -76,6 +78,12 @@
         </div>
       </div>
       <div class="about" id="about">
+        <aside class="section-scroller absolute" id="section-scroller">
+          <span onclick="location.href='./#about'">01</span>
+          <span onclick="location.href='./#experience'">02</span>
+          <span onclick="location.href='./#projects'">03</span>
+          <span onclick="location.href='./#contact'">04</span>
+        </aside>
         <div class="separator invisible" onclick="location.href='./#about'">
           <p class="light-text">Get to know more</p>
         </div>
@@ -90,15 +98,22 @@
               Hi there, I’m a computer engineering student who is passionate
               about creating innovative and user-friendly web applications. I
               have learned full stack web development using HTML, CSS,
-              JavaScript, React, and Node.js.<span class="excess"> I also learned C++, a powerful
-              programming language that can do almost anything. I love solving
-              problems and learning new things. You can check out some of my
-              projects and achievements on this site.</span> If you want to work with
-              me or just say hi, feel free to contact me anytime. Thanks for
-              stopping by!
+              JavaScript, React, and Node.js.<span class="excess">
+                I also learned C++, a powerful programming language that can do
+                almost anything. I love solving problems and learning new
+                things. You can check out some of my projects and achievements
+                on this site.</span
+              >
+              If you want to work with me or just say hi, feel free to contact
+              me anytime. Thanks for stopping by!
             </p>
             <div class="btns-section">
-              <button class="btn btn-color-1" onclick="location.href='./#contact'">Contact Me!</button>
+              <button
+                class="btn btn-color-1"
+                onclick="location.href='./#contact'"
+              >
+                Contact Me!
+              </button>
             </div>
           </div>
         </div>
@@ -108,14 +123,73 @@
           <p class="light-text">Check my</p>
           <h1 class="section-title">Experience</h1>
         </div>
-        <div class="container"></div>
+        <div class="container" id="education">
+          <div class="card">
+            <div class="icon"><i class="fa-solid fa-graduation-cap fa-xl"></i></div>
+            <h3 class="title">Education</h3>
+            <p class="light-text">Bachelor of Computer Engineering</p>
+          </div>
+          <div class="card" id="courses">
+            <div class="icon"><i class="fa-solid fa-book-open fa-xl"></i></div>
+            <h3 class="title">Courses</h3>
+              <p class="light-text">ALX - Full Stack Software Engineer</p>
+              <p class="light-text">Beta Academy Robotics Course</p>
+              <p class="light-text">TheOdinProject - Foundations Course</p>
+              <p class="light-text">TheOdinProject - Full Stack JavaScript Path</p>
+          </div>
+          <div class="card" id="skills">
+            <div class="icon"><i class="fa-solid fa-laptop-code fa-xl"></i></div>
+            <h3 class="title">Skills</h3>
+            <div class="container">
+              <div class="skill">
+                <div class="icon"><i class="fa-solid fa-code fa-lg"></i></div>
+                <h4 class="skill-name">C++</h4>
+                <p class="light-text">advanced</p>
+              </div>
+              <div class="skill">
+                <div class="icon"><i class="fa-solid fa-c fa-lg"></i></div>
+                <h4 class="skill-name">C</h4>
+                <p class="light-text">advanced</p>
+              </div>
+              <div class="skill">
+                <div class="icon">
+                  <i class="fa-brands fa-python fa-lg"></i>
+                </div>
+                <h4 class="skill-name">Python</h4>
+                <p class="light-text">beginner</p>
+              </div>
+              <div class="skill">
+                <div class="icon"><i class="fa-brands fa-html5 fa-lg"></i></div>
+                <h4 class="skill-name">HTML</h4>
+                <p class="light-text">advanced</p>
+              </div>
+              <div class="skill">
+                <div class="icon"><i class="fa-brands fa-css3 fa-lg"></i></div>
+                <h4 class="skill-name">CSS</h4>
+                <p class="light-text">advanced</p>
+              </div>
+              <div class="skill">
+                <div class="icon">
+                  <i class="fa-brands fa-square-js fa-lg"></i>
+                </div>
+                <h4 class="skill-name">JavaScript</h4>
+                <p class="light-text">beginner</p>
+              </div>
+            </div>
+          </div>
+          <div class="education"></div>
+          <div class="courses"></div>
+          <div class="skills"></div>
+        </div>
       </div>
       <div class="projects" id="projects">
         <div class="section-header">
           <p class="light-text">Explore my recent</p>
           <h1 class="section-title">Projects</h1>
         </div>
-        <div class="container"></div>
+        <div class="container">
+          <div class="tag-selector"></div>
+        </div>
       </div>
       <div class="contact" id="contact">
         <div class="section-header">
