@@ -105,6 +105,14 @@
   .skill > .light-text {
     font-size: 12px;
   }
+
+  .projects > .container {
+    width: 100%;
+  }
+
+  .media-h-scroll {
+    padding: 0.5rem 0.5rem;
+  }
 }
 
 @media (max-width: 40rem) {
