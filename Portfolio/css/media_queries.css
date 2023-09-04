@@ -72,7 +72,6 @@
   }
 
   .experience > .container {
-    max-width: 100%;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
@@ -99,6 +98,10 @@
     gap: 0.7rem 0.2rem;
   }
 
+  .skill {
+    grid-template-columns: 24px 1fr;
+  }
+
   .skill-name {
     font-size: var(--p);
   }
@@ -118,5 +121,29 @@
 @media (max-width: 40rem) {
   .experience > .container {
     grid-template-columns: 1fr;
+  }
+
+  .tag-selector {
+    width: clamp(250px, 90%, 300px);
+  }
+  
+  .tags {
+    flex-wrap: wrap;
+  }
+
+  .media-h-scroll {
+    grid-auto-columns: 250px;
+  }
+
+  .footer {
+    font-size: 10px;
+  }
+
+  .contact .card {
+    padding: 0.5rem;
+  }
+
+  #skill > .container {
+    grid-template-columns: repeat(auto-fit, 120px);
   }
 }

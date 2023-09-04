@@ -39,6 +39,7 @@
       </div>
     </nav>
     <main class="main">
+      <!-- Hero Section -->
       <div class="hero">
         <div class="hero-img"></div>
         <div class="hero-text">
@@ -77,13 +78,8 @@
           </div>
         </div>
       </div>
+      <!-- About Section -->
       <div class="about" id="about">
-        <aside class="section-scroller absolute" id="section-scroller">
-          <span onclick="location.href='./#about'">01</span>
-          <span onclick="location.href='./#experience'">02</span>
-          <span onclick="location.href='./#projects'">03</span>
-          <span onclick="location.href='./#contact'">04</span>
-        </aside>
         <div class="separator invisible" onclick="location.href='./#about'">
           <p class="light-text">Get to know more</p>
         </div>
@@ -118,6 +114,7 @@
           </div>
         </div>
       </div>
+      <!-- Experience Section -->
       <div class="experience" id="experience">
         <div class="section-header">
           <p class="light-text">Check my</p>
@@ -188,6 +185,7 @@
           <div class="skills"></div>
         </div>
       </div>
+      <!-- Projects Section -->
       <div class="projects" id="projects">
         <div class="section-header">
           <p class="light-text">Explore my recent</p>
@@ -199,7 +197,9 @@
               <li class="btn-color-3 active shadow-dark-hover" id="all">All</li>
               <li class="btn-color-3 shadow-dark-hover" id="c++">C++</li>
               <li class="btn-color-3 shadow-dark-hover" id="c">C</li>
-              <li class="btn-color-3 shadow-dark-hover" id="web">Web development</li>
+              <li class="btn-color-3 shadow-dark-hover" id="web">
+                Web development
+              </li>
             </ul>
           </div>
           <div class="cover">
@@ -442,20 +442,74 @@
           </div>
         </div>
       </div>
+      <!-- Contact Section -->
       <div class="contact" id="contact">
         <div class="section-header">
           <p class="light-text">Get in touch</p>
           <h1 class="section-title">Contact Me</h1>
         </div>
-        <div class="container"></div>
+        <div class="container">
+          <div class="card shadow-dark-hover">
+            <div class="links-section">
+              <a href="mailto:moamensaied1@gmail.com" class="link-with-icon">
+                <i class="fa-solid fa-envelope fa-lg"></i>
+                <p>moamensaied1@gmail.com</p>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/mohefny04/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-with-icon"
+                ><i class="fa-brands fa-linkedin fa-lg"></i>
+                <p>LinkedIn</p>
+              </a>
+            </div>
+          </div>
+          <div class="card shadow-dark-hover">
+            <div class="icon"><i class="fa-regular fa-comments fa-xl"></i></div>
+            <h3 class="title">Let's Connect</h3>
+            <div class="links-section">
+              <a
+                href="https://www.linkedin.com/in/mohefny04/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fa-brands fa-linkedin fa-lg"></i
+              ></a>
+              <a
+                href="https://github.com/Mo2Hefny"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fa-brands fa-github fa-lg"></i
+              ></a>
+              <a
+                href="https://www.instagram.com/moamen.hefny/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="fa-brands fa-instagram fa-lg"></i>
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer"
+                ><i class="fa-brands fa-facebook-messenger fa-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
+    <!-- Footer -->
     <footer class="footer">
       <p>Copyright &copy 2023 Moamen Hefny. All Rights Reserved</p>
     </footer>
-    <button class="light shadow-light shadow-light-hover" id="scroll-down">
+    <!-- Scroll Button -->
+    <button class="light shadow-light-hover" id="scroll-down">
       <i class="fa-solid fa-arrow-down fa-lg"></i>
     </button>
+    <!-- Section Pages -->
+    <aside class="section-scroller absolute" id="section-scroller">
+      <span onclick="location.href='./#about'">01</span>
+      <span onclick="location.href='./#experience'">02</span>
+      <span onclick="location.href='./#projects'">03</span>
+      <span onclick="location.href='./#contact'">04</span>
+    </aside>
   </body>
   <script src="./js/script.js"></script>
 </html>

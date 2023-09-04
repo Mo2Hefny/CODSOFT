@@ -419,9 +419,6 @@ main > div > .container {
 }
 
 /* about me */
-.about {
-}
-
 .about > .container {
   display: grid;
   grid-template-columns: 400px clamp(300px, 50%, 700px);
@@ -497,7 +494,7 @@ main > div > .container {
 
 /* Project */
 .projects > .container {
-  width: clamp(300px, 80%, 80vw);
+  width: clamp(272px, 80%, 80vw);
   display: grid;
   justify-items: center;
   gap: 2rem;
@@ -511,15 +508,17 @@ main > div > .container {
 }
 
 .tag-selector {
-  width: 300px;
+  width: clamp(250, 100%, 300px);
   margin: 0.5rem 0;
 }
 
 .tags {
   display: flex;
+  justify-content: center;
   gap: 0.5rem;
   font-size: var(--small);
   font-weight: 600;
+  inline-size: 100%;
 }
 
 .tags > .active {
@@ -528,7 +527,6 @@ main > div > .container {
 }
 
 .tags > li {
-  inline-size: 100%;
   padding: 3px 8px;
   white-space: nowrap;
   border: 3px solid var(--dark);
@@ -548,7 +546,7 @@ main > div > .container {
 .scroll-snap {
   overscroll-behavior-inline: contain;
   scroll-snap-type: inline mandatory;
-  scroll-padding-inline: 1rem;
+  scroll-padding-inline: 0.5rem;
 }
 
 .scroll-snap > * {
@@ -578,6 +576,37 @@ main > div > .container {
 
 
 /* Contact */
+.contact {
+  padding-bottom: 70px;
+}
+
+.contact > .container {
+  display: grid;
+  gap: 2rem 1rem;
+}
+
+.links-section {
+  flex-wrap: wrap;
+}
+
+.link-with-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+}
+
+.link-with-icon > p {
+  padding: 4px 6px;
+  padding-left: 12px;
+  transition: 0.3s ease;
+  font-weight: 600;
+}
+
+.link-with-icon:hover {
+  color: var(--pop);
+  scale: 102%;
+}
 
 /* Footer */
 .footer {
@@ -691,6 +720,7 @@ main > div > .container {
 /* section-scroller */
 .section-scroller.absolute {
   position: absolute;
+  top: 150vh;
 }
 
 .section-scroller {

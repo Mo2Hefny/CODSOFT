@@ -52,22 +52,22 @@ function updateSectionScroller() {
   for (const span of sectionScrollerSpans) {
     span.classList.remove('active');
   }
-  const i = Math.max(getCurrentSection() - 1, 0);
+  const i = Math.max(getCurrentSection(vhToPixels(40)) - 1, 0);
   console.log(sectionScrollerSpans);
   sectionScrollerSpans[i].classList.add('active');
 }
 
 function scrollDown() {
-  portfolioSections[getCurrentSection() + 1].scrollIntoView();
+  portfolioSections[getCurrentSection(50) + 1].scrollIntoView();
   console.log(document.documentElement.scrollTop);
 }
 
-function getCurrentSection() {
+function getCurrentSection(permissableOffset) {
   const scrollY = document.documentElement.scrollTop;
   let i = 0;
   for (; i < portfolioSections.length; i++)
   {
-    if (portfolioSectionsStart[i] > scrollY + 30)
+    if (portfolioSectionsStart[i] > scrollY + permissableOffset)
       break;
   }
   return i - 1;
