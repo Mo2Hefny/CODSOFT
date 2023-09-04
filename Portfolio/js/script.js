@@ -6,6 +6,11 @@ const largeNavigation = document.querySelector('.large-nav');
 const smallNavigation = document.querySelector('.small-nav');
 const sectionScroller = document.querySelector('.section-scroller');
 const sectionScrollerSpans = document.querySelectorAll('.section-scroller span');
+const projectTags =  document.querySelector('.tags').children;
+const projectCards =  document.querySelector('#projects-scroll').children;
+let selectedTag = projectTags[0];
+for (const tag of projectTags)
+  tag.addEventListener('click', showSelectedTag);
 
 window.addEventListener("scroll", scrollFunction);
 window.addEventListener("resize", updateSectionStarts);
@@ -73,4 +78,20 @@ function toggleMenu() {
   document.querySelector('.close').classList.toggle('hide');
   document.querySelector('.side-menu').classList.toggle('hide');
   console.log('working!');
+}
+
+function showSelectedTag(event) {
+  const clickedTag = event.target;
+  clickedTag.classList.toggle('active');
+  selectedTag.classList.remove('active');
+  selectedTag = clickedTag.classList.contains('active') ? clickedTag : projectTags[0];
+  let tag = selectedTag.getAttribute('id');
+  if (tag === 'all')  { selectedTag.classList.add('active'); tag = 'card'; }
+  for (const card of projectCards)
+  {
+    if (card.classList.contains(tag))
+      card.classList.remove('hide');
+    else
+      card.classList.add('hide');
+  }
 }
