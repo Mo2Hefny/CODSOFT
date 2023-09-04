@@ -4,6 +4,8 @@ updateSectionStarts();
 const scrollDownBtn = document.getElementById('scroll-down');
 const largeNavigation = document.querySelector('.large-nav');
 const smallNavigation = document.querySelector('.small-nav');
+const sectionScroller = document.querySelector('.section-scroller');
+const sectionScrollerSpans = document.querySelectorAll('.section-scroller span');
 
 window.addEventListener("scroll", scrollFunction);
 window.addEventListener("resize", updateSectionStarts);
@@ -25,6 +27,8 @@ function scrollFunction() {
   toggleAccordingToScroll(scrollDownBtn, 'light', vhToPixels(8));
   toggleAccordingToScroll(largeNavigation, 'light', vhToPixels(92));
   toggleAccordingToScroll(smallNavigation, 'light', vhToPixels(50));
+  toggleAccordingToScroll(sectionScroller, 'absolute', portfolioSectionsStart[1]);
+  updateSectionScroller();
 }
 
 function toggleAccordingToScroll(element, addedClass, height) {
@@ -39,19 +43,29 @@ function vhToPixels (vh) {
   return Math.round(window.innerHeight / (100 / vh));
 }
 
+function updateSectionScroller() {
+  for (const span of sectionScrollerSpans) {
+    span.classList.remove('active');
+  }
+  const i = Math.max(getCurrentSection() - 1, 0);
+  console.log(sectionScrollerSpans);
+  sectionScrollerSpans[i].classList.add('active');
+}
+
 function scrollDown() {
+  portfolioSections[getCurrentSection() + 1].scrollIntoView();
+  console.log(document.documentElement.scrollTop);
+}
+
+function getCurrentSection() {
   const scrollY = document.documentElement.scrollTop;
-  for (let i = 0; i < portfolioSections.length; i++)
+  let i = 0;
+  for (; i < portfolioSections.length; i++)
   {
     if (portfolioSectionsStart[i] > scrollY + 30)
-    {
-      console.log(portfolioSections[i]);
-      console.log(portfolioSectionsStart[i]);
-      portfolioSections[i].scrollIntoView();
       break;
-    }
   }
-  console.log(document.documentElement.scrollTop);
+  return i - 1;
 }
 
 function toggleMenu() {
