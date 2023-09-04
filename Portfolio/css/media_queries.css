@@ -48,12 +48,15 @@
     padding: 6px 14px;
   }
 
+  main > div > .container {
+    padding: 0.5rem;
+  }
+
   .about > .container {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
-    padding: 1rem;
   }
-
+  
   .section {
     padding: 1rem;
   }
@@ -66,5 +69,46 @@
     left: 89%;
     translate: -50% -50%;
     bottom: 7%;
+  }
+
+  .experience > .container {
+    max-width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .experience .card {
+    padding: 1rem;
+  }
+
+  #education,
+  #courses {
+    text-align: center;
+  }
+
+  #skills {
+    grid-row:auto;
+    grid-column: 1 / -1;
+  }
+
+  #skills > .container {
+    max-width: 100%;
+    padding: 0.5rem;
+    justify-self: center;
+    grid-template-columns: repeat(auto-fit, clamp(120px, 1fr, 150px));
+    gap: 0.7rem 0.2rem;
+  }
+
+  .skill-name {
+    font-size: var(--p);
+  }
+  .skill > .light-text {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 40rem) {
+  .experience > .container {
+    grid-template-columns: 1fr;
   }
 }
