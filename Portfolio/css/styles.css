@@ -371,6 +371,10 @@ body::-webkit-scrollbar {
   transition: all 0.3s ease;
 }
 
+.separator.invisible {
+  cursor: pointer;
+}
+
 .separator.invisible:hover {
   height: 60px;
   top: -60px;
@@ -673,6 +677,7 @@ main > div > .container {
   border-radius: 50%;
   z-index: 99;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 #scroll-down > i {
