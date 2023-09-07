@@ -3,9 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="../src/styles.css">
+  <title>TODO List</title>
 </head>
 <body>
+  <aside class="sidebar" id="sidebar">
+    <div class="logo icon-before">
+      <i class="fa-regular fa-calender"></i>
+      <h1>TODO List</h1>
+    </div>
+    <div class="sorting-tags" id="date-sort"></div>
+    <div class="sorting-tags" id="category-sort"></div>
+  </aside>
+  <main>
+    <header class="list-header">
+      <h1 class="title" id="sort-type"></h1>
+      <div class="icon drop-down-menu" id="sort-filter"></div>
+    </header>
+    <div id="list-container"></div>
+  </main>
   <script src="main.js"></script>
 </body>
 </html>
