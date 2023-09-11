@@ -16,6 +16,8 @@ export const TODO = (() => {
     Repeated ${repetition}\n
     Its priority is ${priority}`
     );
+
+    DOM_Handler.createTask(title, date, priority, repetition, relation);
   }
 
   const addProject = () => {

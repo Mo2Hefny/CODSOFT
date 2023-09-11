@@ -1,6 +1,18 @@
 import _ from 'lodash';
 export const DOM_Handler = (() => {
   
+  const createTask = (title, date, priority, repetition, relation) => {
+    let task = document.createElement('li');
+    task.classList.add('task');
+    task.innerHTML = `<div class="drop-down-top"><div class="checkbox-before"><input type="checkbox" name="task1" id="task1" /><h4 class="task-title checkbox-text">${title}</h4></div><i class="fa-solid fa-caret-down fa-lg"></i></div><div class="task-details drop-down-content"><ul class="sub-tasks-list"></ul><div class="properties"><div class="date">${date}</div><div class="priority">${priority}</div><div class="repetition">${repetition}</div><div class="relation">${relation}</div></div></div>`;
+    task.firstChild.addEventListener('click', (event) => {
+      const header = event.target.closest('.drop-down-top');
+      if (header === undefined) return;
+      DOM_Handler.toggleMenu(header.nextElementSibling);
+    });
+    document.getElementById('tasks').appendChild(task);
+  }
+
   const addNewTaskProject = (projectName) => {
     const projectsList = document.getElementById('task-relation-menu');
     const li = document.createElement("li");
@@ -52,6 +64,7 @@ export const DOM_Handler = (() => {
   }
 
   return {
+    createTask,
     addProject,
     toggleMenu,
   }

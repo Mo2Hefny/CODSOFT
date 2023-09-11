@@ -8,6 +8,7 @@ document.querySelector('#add-project input').addEventListener('keyup', (event) =
   if (event.key === 'Enter')  TODO.addProject();
 });
 
+// Add Menu EventListeners
 const menuHeaders = document.querySelectorAll('.menu-header');
 console.log(menuHeaders);
 for (const menuHeader of menuHeaders)
@@ -16,6 +17,32 @@ for (const menuHeader of menuHeaders)
     if (header === undefined) return;
     DOM_Handler.toggleMenu(header.nextElementSibling);
   });
+
+const dropDowns = document.querySelectorAll('.dropdown');
+dropDowns.forEach(dropDown => {
+  // Get inner elements
+  const select = dropDown.querySelector('.select');
+  const caret = dropDown.querySelector('.caret');
+  const menu = dropDown.querySelector('.dropdown-menu');
+  const options = dropDown.querySelectorAll('.dropdown-menu li');
+
+  select.addEventListener('click', () => {
+    select.classList.toggle('select-clicked');
+    caret.classList.toggle('caret-rotate');
+    menu.classList.toggle('menu-open');
+  });
+
+  options.forEach(option => {
+    select.textContent = option.textContent;
+    select.classList.remove('select-clicked');
+    caret.classList.remove('caret-rotate');
+    menu.classList.remove('menu-open');
+    options.forEach(option => {
+      option.classList.remove('active');
+    });
+    option.classList.add('active');
+  })
+})
 
 // Add Task Events
 document.querySelector('#add-task > i').addEventListener('click', TODO.addTask);

@@ -65,7 +65,10 @@
       <div class="list-container">
         <ul class="tasks-list" id="tasks">
           <li class="task">
-            <div class="drop-down-top open">
+            <div
+              class="drop-down-top"
+              onclick="DOM_Handler.toggleMenu(this.nextElementSibling)"
+            >
               <div class="checkbox-before">
                 <input type="checkbox" name="task1" id="task1" />
                 <h4 class="task-title checkbox-text">
@@ -73,6 +76,22 @@
                 </h4>
               </div>
               <i class="fa-solid fa-caret-down fa-lg"></i>
+            </div>
+            <div class="task-details drop-down-content open">
+              <ul class="sub-tasks-list"></ul>
+              <div class="properties">
+                <div class="dropdown">
+                  <div class="select">
+                    <span class="selected">Medium</span>
+                    <div class="caret"></div>
+                  </div>
+                  <ul class="dropdown-menu">
+                    <li>Hard</li>
+                    <li>Medium</li>
+                    <li>Low</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </li>
         </ul>
@@ -143,7 +162,7 @@
                   name="create-repetition"
                   value="weekly"
                 />
-                <label for="weekly">Weekly</label><br />
+                <label for="weekly">Weekly</label>
               </li>
               <li>
                 <input
