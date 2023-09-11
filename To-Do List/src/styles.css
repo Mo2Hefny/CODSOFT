@@ -401,11 +401,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
+  position: relative;
 }
 
 .select:hover {
   background: var(--_select-hover);
   box-shadow: 0 0 6px var(--accent);
+}
+
+.select-clicked {
+  box-shadow: inset 1px 1px 6px #0a020170,
+  inset -1px -1px 4px #f6f1ee40;
 }
 
 .caret {
@@ -415,6 +421,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-right: 5px solid transparent;
   border-top: 5px solid white;
   transition: 0.3s;
+}
+
+.caret.caret-rotate {
+  rotate: -180deg;
 }
 
 .dropdown-menu {
@@ -432,7 +442,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   -1px -1px 5px #f6f1eeaa;
 }
 
-.dropdown-menu.open {
+.dropdown-menu.menu-open {
   display: block;
   opacity: 1;
 }

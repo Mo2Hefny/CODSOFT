@@ -22,6 +22,7 @@ const dropDowns = document.querySelectorAll('.dropdown');
 dropDowns.forEach(dropDown => {
   // Get inner elements
   const select = dropDown.querySelector('.select');
+  const selected = dropDown.querySelector('.selected');
   const caret = dropDown.querySelector('.caret');
   const menu = dropDown.querySelector('.dropdown-menu');
   const options = dropDown.querySelectorAll('.dropdown-menu li');
@@ -33,7 +34,7 @@ dropDowns.forEach(dropDown => {
   });
 
   options.forEach(option => {
-    select.textContent = option.textContent;
+    selected.textContent = option.textContent;
     select.classList.remove('select-clicked');
     caret.classList.remove('caret-rotate');
     menu.classList.remove('menu-open');
