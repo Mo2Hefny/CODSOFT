@@ -124,9 +124,12 @@ main {
 
 .tasks-list {
   position: relative;
+  max-width: 70rem;
   display: grid;
   padding: 8px;
   gap: 1rem;
+  left: 50%;
+  translate: -50%;
 }
 
 .task .caret {
@@ -255,6 +258,7 @@ input[type="text"].task-title {
 
 .properties > .date {
   position: relative;
+  border: 3px solid transparent;
   border-radius: 8px;
   cursor: pointer;
   min-width: 8rem;

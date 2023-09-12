@@ -200,7 +200,6 @@ export class Task {
   #editTask(button) {
     this.#titleEl.toggleAttribute('readonly');
     this.#dateEl.classList.toggle('disabled');
-    console.log(this.#dateEl.classList.contains('disabled'));
     this.#priorityEl.firstElementChild.classList.toggle('disabled');
     this.#repetitionEl.firstElementChild.classList.toggle('disabled');
   }
