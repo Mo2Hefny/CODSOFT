@@ -1,8 +1,14 @@
 import _ from 'lodash';
 import { DOM_Handler } from "./DOM_Handler";
+import { Task } from "./Task";
+
+let numberOfTasks = 0;
 
 export const TODO = (() => {
+  let tasksArray = [];
+
   const addTask = () => {
+    numberOfTasks++;
     console.log('adding task...');
     const priority = document.querySelector('input[name="create-priority"]:checked').value;
     const repetition = document.querySelector('input[name="create-repetition"]:checked').value;
@@ -16,8 +22,15 @@ export const TODO = (() => {
     Repeated ${repetition}\n
     Its priority is ${priority}`
     );
-
-    DOM_Handler.createTask(title, date, priority, repetition, relation);
+    const task = new Task (title, date, priority, repetition, relation, numberOfTasks);
+    task.taskEl.querySelector('.delete-task').addEventListener('click', () => {
+      TODO.deleteTask(task);
+    });
+    tasksArray.push(task);
+    filterTasks();
+    console.log(tasksArray);
+    document.getElementById('tasks').appendChild(tasksArray[tasksArray.length - 1].taskEl);
+    //DOM_Handler.createTask(title, date, priority, repetition, relation);
   }
 
   const addProject = () => {
@@ -31,11 +44,20 @@ export const TODO = (() => {
 
     // Else add it to list
     DOM_Handler.addProject(projectName);
-    
+  }
+
+  const deleteTask = (task) => {
+    const index = tasksArray.indexOf(task);
+    tasksArray = tasksArray.slice(0, index).concat(tasksArray.slice(index + 1));
+  }
+
+  const filterTasks = () => {
+    tasksArray = tasksArray.filter((task) => !(task.deleted));
   }
 
   return {
     addProject,
     addTask,
+    deleteTask,
   }
 })();

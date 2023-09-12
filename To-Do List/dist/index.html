@@ -16,22 +16,24 @@
         <i class="fa-solid fa-list-check fa-2xl"></i>
         <h1>TODO List</h1>
       </div>
-      <ul class="nav-links" id="date-sort">
-        <li class="icon-before">
-          <i class="fa-solid fa-inbox fa-xl"></i>
-          <span>Inbox</span>
-        </li>
-        <li class="icon-before">
-          <div class="today-icon small"><p class="today-day">0</p></div>
-          <span>Today</span>
-        </li>
-        <li class="icon-before">
-          <i class="fa-regular fa-calendar fa-xl"></i>
-          <span>Upcoming</span>
-        </li>
-      </ul>
-      <div class="drop-down">
-        <div class="icon-before">
+      <div class="group">
+        <ul class="nav-links" id="date-sort">
+          <li class="icon-before">
+            <i class="fa-solid fa-inbox fa-xl"></i>
+            <span>Inbox</span>
+          </li>
+          <li class="icon-before">
+            <div class="today-icon small"><p class="today-day">0</p></div>
+            <span>Today</span>
+          </li>
+          <li class="icon-before">
+            <i class="fa-regular fa-calendar fa-xl"></i>
+            <span>Upcoming</span>
+          </li>
+        </ul>
+      </div>
+      <div class="group">
+        <div class="icon-before group-header">
           <i class="fa-solid fa-bullseye fa-xl"></i>
           <h2 class="title icon-before">Projects</h2>
         </div>
@@ -71,26 +73,56 @@
             >
               <div class="checkbox-before">
                 <input type="checkbox" name="task1" id="task1" />
-                <h4 class="task-title checkbox-text">
-                  Solve some problems on Codforces.
-                </h4>
+                <span></span>
+                <input type="text" value="test" readonly class="task-title checkbox-text" />
               </div>
-              <i class="fa-solid fa-caret-down fa-lg"></i>
+              <div class="caret"></div>
             </div>
-            <div class="task-details drop-down-content open">
-              <ul class="sub-tasks-list"></ul>
+            <div class="task-details dropdown-menu menu-open">
+              <ul class="sub-tasks-list">
+                <li class="add icon-before" id="add-project">
+                  <i class="fa-solid fa-plus fa-lg icon-useable"></i>
+                  <input
+                    class="add"
+                    type="text"
+                    placeholder="Add Sub Task"
+                    minlength="1"
+                  />
+                </li>
+              </ul>
               <div class="properties">
-                <div class="dropdown">
+                <div class="date property">
+                  <input type="date" name="due-date">
+                  <p>9 - 11 - 2023</p>
+                </div>
+                <div class="dropdown priority">
                   <div class="select">
                     <span class="selected">Medium</span>
                     <div class="caret"></div>
                   </div>
-                  <ul class="dropdown-menu">
+                  <ul class="menu down">
                     <li>Hard</li>
                     <li>Medium</li>
                     <li>Low</li>
                   </ul>
                 </div>
+                <div class="dropdown">
+                  <div class="select disabled">
+                    <span class="selected">Medium</span>
+                    <div class="caret"></div>
+                  </div>
+                  <ul class="menu down">
+                    <li>Once</li>
+                    <li>Daily</li>
+                    <li>Weekly</li>
+                    <li>Monthly</li>
+                    <li>Yearly</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="btn-section">
+                <button class="btn-color-1 edit">Edit</button>
+                <button class="btn-color-2 delete">Delete</button>
               </div>
             </div>
           </li>

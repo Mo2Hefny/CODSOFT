@@ -24,8 +24,8 @@ dropDowns.forEach(dropDown => {
   const select = dropDown.querySelector('.select');
   const selected = dropDown.querySelector('.selected');
   const caret = dropDown.querySelector('.caret');
-  const menu = dropDown.querySelector('.dropdown-menu');
-  const options = dropDown.querySelectorAll('.dropdown-menu li');
+  const menu = dropDown.querySelector('.menu');
+  const options = dropDown.querySelectorAll('.menu li');
 
   select.addEventListener('click', () => {
     select.classList.toggle('select-clicked');
