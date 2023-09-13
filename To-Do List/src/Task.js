@@ -32,6 +32,25 @@ export class Task {
     this.id = id;
   }
 
+  getInfo() {
+    const dateArray = this.#dueDate.split('-');
+    const dueDate = `${dateArray[1]}-${dateArray[0]}-${dateArray[2]}`;
+    const createDateArray = this.#createDate.split('-');
+    const createDate = `${createDateArray[1]}-${createDateArray[0]}-${createDateArray[2]}`;
+    console.log(isNaN(createDate));
+    console.log(isNaN(dueDate));
+    return {
+      title: this.#title,
+      dueDate: dueDate,
+      hasDueDate: this.#dueDate != 'None',
+      createdDate: createDate,
+      repetition: this.#repetition,
+      priority: this.#priority,
+      relation: this.#relation,
+      id: this.id,
+    }
+  }
+
   #setDate(date, repetition) {
     console.log(`Due: ${date} & Repeated ${repetition}`);
     console.log(isNaN(date));
@@ -49,7 +68,18 @@ export class Task {
     console.log(today);
     const diff = (dueDate - today) / 1000;
     console.log(diff);
+    if (diff < 0) this.taskEl.classList.add('late');
+    else this.taskEl.classList.remove('late');
     return diff / (3600 * 24);
+  }
+
+  getPriority() {
+    switch (this.#priority) {
+      case 'Low': return 0;
+      case 'Medium': return 1;
+      case 'High': return 2;
+      default: return -1;
+    }
   }
 
   getRelatedProject() {
@@ -61,6 +91,7 @@ export class Task {
     const dateArray = this.#dueDate.split('-');
     const dueDate = new Date(`${dateArray[1]}-${dateArray[0]}-${dateArray[2]}`);
     const days = this.getDays();
+    if (days < 0) return 'Late';
     if (days > 7) return this.#dueDate;
     if (days < 2) return days ? 'Tomorrow' : 'Today';
     const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -70,6 +101,7 @@ export class Task {
   #createTaskElement() {
     this.taskEl = document.createElement('div');
     this.taskEl.setAttribute('id', `task${this.id}`);
+    this.taskEl.classList.add(`${this.#priority}`);
     this.taskEl.classList.add('task');
     // Top section
     this.#titleEl = document.createElement('input');
@@ -83,7 +115,7 @@ export class Task {
     const top = document.createElement('div');
     top.classList.add('drop-down-top');
     top.innerHTML = `<div class="checkbox-before">
-                      <input class="main-checkbox" type="checkbox" name="task1" id="task1" />
+                      <input class="main-checkbox" type="checkbox" name="task${this.id}" id="task${this.id}" />
                       <span></span>
                     </div>
                     <p class="related-project">${this.#relation}</p>
@@ -107,6 +139,7 @@ export class Task {
     btnSection.classList.add('btn-section');
     const editBtn = document.createElement('button');
     editBtn.classList.add('btn-color-1');
+    editBtn.classList.add('edit-task');
     editBtn.textContent = 'Edit';
     editBtn.addEventListener('click', () => {
       editBtn.textContent = 'Save';
@@ -152,7 +185,7 @@ export class Task {
         <div class="caret"></div>
       </div>
       <ul class="menu down">
-        <li>Hard</li>
+        <li>High</li>
         <li>Medium</li>
         <li>Low</li>
       </ul>`;
@@ -266,6 +299,10 @@ export class Task {
   #updateTask() {
     this.#title = this.#titleEl.value;
     this.#priority = this.#priorityEl.querySelector('.selected').textContent;
+    this.taskEl.classList.remove('Low');
+    this.taskEl.classList.remove('Medium');
+    this.taskEl.classList.remove('High');
+    this.taskEl.classList.add(`${this.#priorityEl.querySelector('.selected').textContent}`);
     this.#repetition = this.#repetitionEl.querySelector('.selected').textContent;
     this.#updateDate();
     console.log(`${this.#titleEl} ${this.#priority} ${this.#repetition} ${this.#dueDate}`);
@@ -295,7 +332,6 @@ export class Task {
 
   deleteTask() {
     this.deleted = true;
-    console.log(this.taskEl);
     this.taskEl.parentNode.removeChild(this.taskEl);
   }
 

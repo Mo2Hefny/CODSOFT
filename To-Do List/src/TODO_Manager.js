@@ -2,14 +2,48 @@ import _ from 'lodash';
 import { DOM_Handler } from "./DOM_Handler";
 import { Task } from "./Task";
 
+function storageAvailable(type) {
+  let storage;
+  try {
+    storage = window[type];
+    const x = "__storage_test__";
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return (
+      e instanceof DOMException &&
+      // everything except Firefox
+      (e.code === 22 ||
+        // Firefox
+        e.code === 1014 ||
+        // test name field too, because code might not be present
+        // everything except Firefox
+        e.name === "QuotaExceededError" ||
+        // Firefox
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+      // acknowledge QuotaExceededError only if there's something already stored
+      storage &&
+      storage.length !== 0
+    );
+  }
+}
+
 let numberOfTasks = 0;
 
 export const TODO = (() => {
   let tasksArray = [];
+  let tasksInfoArray = [];
   let projectsArray = [];
+  let projectsNameArray = [];
+  const isStorageAvailable = storageAvailable("localStorage");
 
   const sortTasks = () => {
-    tasksArray.sort((a, b) => { return a.getDays() - b.getDays();})
+    tasksArray.sort((a, b) => { 
+      if (a.getDays() === b.getDays())
+        return b.getPriority() - a.getPriority();
+      return a.getDays() - b.getDays();
+    })
   }
 
   const addTask = () => {
@@ -27,15 +61,26 @@ export const TODO = (() => {
     Repeated ${repetition}\n
     Its priority is ${priority}`
     );
-    const task = new Task (title, date, priority, repetition, relation, numberOfTasks);
+
+    addTaskObject(title, date, priority, repetition, relation, numberOfTasks);
+    updateTasksList();
+  }
+
+  const addTaskObject = (title, date, priority, repetition, relation, numberOfTasks, currentDate) => {
+    const task = new Task (title, date, priority, repetition, relation, numberOfTasks, currentDate);
+    task.taskEl.querySelector('.edit-task').addEventListener('click', () => {
+      updateTaskInfo(task);
+    })
     task.taskEl.querySelector('.delete-task').addEventListener('click', () => {
       TODO.deleteTask(task);
     });
     tasksArray.push(task);
+    tasksInfoArray.push(task.getInfo());
     sortTasks();
-    console.log(tasksArray);
-    updateTasksList();
-    //DOM_Handler.createTask(title, date, priority, repetition, relation);
+    if (isStorageAvailable) {
+      localStorage.setItem("tasks", JSON.stringify(tasksInfoArray));
+      console.log(JSON.parse(localStorage.getItem("tasks")));
+    }
   }
 
   const addProject = () => {
@@ -63,11 +108,20 @@ export const TODO = (() => {
     })
     
     // Else add it to list
+    addProjectObject(projectName);
+  }
+
+  const addProjectObject = (projectName) => {
     const project = DOM_Handler.addProject(projectName);
     project.querySelector('i.delete').addEventListener('click', (event) => {
       deleteProject(event.target.closest('li'));
     })
     projectsArray.push(project);
+    projectsNameArray.push(projectName);
+    if (isStorageAvailable) {
+      localStorage.setItem("projects", JSON.stringify(projectsNameArray));
+      console.log(JSON.parse(localStorage.getItem("projects")));
+    }
     DOM_Handler.addNewTaskProject(projectName);
     project.addEventListener('click', (event) => {
       if (event.target.classList.contains('delete'))  return;
@@ -82,14 +136,28 @@ export const TODO = (() => {
 
   const deleteTask = (task) => {
     const index = tasksArray.indexOf(task);
+    const id = task.id;
+    for (let i = 0; i < tasksInfoArray.length; i++) {
+      if (tasksInfoArray[i].id == id) {
+        console.log('removing from taskInfoArray')
+        tasksInfoArray = tasksInfoArray.slice(0, i).concat(tasksInfoArray.slice(i + 1));
+        break;
+      }
+    }
     tasksArray = tasksArray.slice(0, index).concat(tasksArray.slice(index + 1));
+    if (isStorageAvailable) {
+      localStorage.setItem("tasks", JSON.stringify(tasksInfoArray));
+      console.log(JSON.parse(localStorage.getItem("tasks")));
+    }
   }
 
   const deleteProject = (project) => {
     const index = projectsArray.indexOf(project);
-    projectsArray = projectsArray.slice(0, index).concat(projectsArray.slice(index + 1));
-    project.parentNode.removeChild(project);
     const projectName = project.querySelector("span").innerHTML;
+    const nameIndex = projectsNameArray.indexOf(projectName);
+    projectsArray = projectsArray.slice(0, index).concat(projectsArray.slice(index + 1));
+    projectsNameArray = projectsNameArray.slice(0, nameIndex).concat(projectsNameArray.slice(nameIndex + 1));
+    project.parentNode.removeChild(project);
     tasksArray.forEach(task => {
       if (task.getRelatedProject() === projectName) {
         task.deleteTask();
@@ -102,6 +170,10 @@ export const TODO = (() => {
     }
     console.log(`projects: ${projectsArray}`);
     DOM_Handler.updateNewTaskProject(projectsArray);
+    if (isStorageAvailable) {
+      localStorage.setItem("projects", JSON.stringify(projectsNameArray));
+      console.log(JSON.parse(localStorage.getItem("projects")));
+    }
   }
 
   const updateTODOlist = () => {
@@ -128,6 +200,21 @@ export const TODO = (() => {
     }
   }
 
+  const updateTaskInfo = (task) => {
+    const id = task.id;
+    for (let i = 0; i < tasksInfoArray.length; i++) {
+      if (tasksInfoArray[i].id == id) {
+        console.log('updating info');
+        tasksInfoArray[i] = task.getInfo();
+        break;
+      }
+    }
+    if (isStorageAvailable) {
+      localStorage.setItem("tasks", JSON.stringify(tasksInfoArray));
+      console.log(JSON.parse(localStorage.getItem("tasks")));
+    }
+  }
+
   const refreshTODOList = () => {
     console.log('refreshing list')
     tasksArray.forEach(task => {
@@ -150,7 +237,7 @@ export const TODO = (() => {
     const tasksList = document.querySelector('.tasks-list');
     tasksArray.forEach(task => {
       const daysLeft = task.getDays();
-      if (!(daysLeft === 0 ^ show))
+      if (!(daysLeft <= 0 ^ show))
         tasksList.appendChild(task.taskEl);
     });
   }
@@ -162,6 +249,38 @@ export const TODO = (() => {
     if (icon === null) return;
     icon.classList.remove('fa-xl');
   }
+
+  const loadTODOList = () => {
+    console.log('Loading TODO list.');
+    // Load Tasks
+    console.log(JSON.parse(localStorage.getItem("tasks")));
+    const tempTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (tempTasks != null)
+      tempTasks.forEach(taskInfo => {
+        console.log(`Loading ${taskInfo.id}`);
+        const dueDate = taskInfo.hasDueDate ? new Date(taskInfo.dueDate) : undefined;
+        addTaskObject(taskInfo.title,
+                      dueDate,
+                      taskInfo.priority,
+                      taskInfo.repetition,
+                      taskInfo.relation,
+                      taskInfo.id,
+                      new Date(taskInfo.createdDate));
+        numberOfTasks = Math.max(taskInfo.id, numberOfTasks) + 1;
+    })
+    updateTasksList();
+      
+    // Load Projects
+    console.log(localStorage.getItem("projects"));
+    console.log(JSON.parse(localStorage.getItem("projects")));
+    const tempProjects = JSON.parse(localStorage.getItem("projects"))
+    if (tempProjects != null)
+      tempProjects.forEach(projectName => {
+        console.log(`Loading ${projectName}`);
+        addProjectObject(projectName);
+      })
+  }
+  if (isStorageAvailable) loadTODOList();
 
   return {
     addProject,

@@ -331,9 +331,40 @@ input[type="text"].task-title {
 }
 
 .task {
+  position: relative;
   background: var(--secondary);
+  border: 2px solid transparent;
   border-radius: 3px;
   box-shadow: 1px 1px 5px #0a020170;
+}
+
+.task.late {
+  border-color: var(--accent);
+  box-shadow: 1px 1px 10px #0a020170;
+}
+
+.task::before {
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  translate: 0 -50%;
+  width: 5px;
+  border-radius: 8px;
+  height: 101%;
+  content: '';
+  z-index: 20;
+}
+
+.task.Low::before {
+  background: green;
+}
+
+.task.Medium::before{
+  background: orange;
+}
+
+.task.High::before {
+  background: red;
 }
 
 /* 
