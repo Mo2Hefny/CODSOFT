@@ -22,6 +22,15 @@
   --pad-3: 3rem;
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -40,15 +49,60 @@ body {
 }
 
 .sidebar {
-  width: clamp(150px, 25%, 250px);
+  position: relative;
+  width: 0;
   height: 100vh;
-  padding: 2.5rem 1.5rem;
+  padding: 2.5rem 1rem;
   padding-right: 0;
   background: var(--primary);
   color: var(--light);
   display: flex;
   flex-direction: column;
   gap: 4rem;
+  transition: 0.3s ease;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.sidebar > * {
+  opacity: 0;
+  transition-delay: 0.3s;
+  transition: 0.2s ease;
+}
+
+.sidebar.open {
+  width: clamp(220px, 25%, 250px);
+  padding: 2.5rem 1.5rem;
+  padding-right: 0;
+  pointer-events: auto;
+}
+
+.sidebar.open > * {
+  opacity: 1;
+}
+
+#menu-arrow {
+  pointer-events: auto;
+  opacity: 1;
+  position: absolute;
+  left: 100%;
+  translate: -55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  border-radius: 0 50% 50% 0;
+  width: 30px;
+  height: 30px;
+  padding: 0.4rem;
+  font-size: var(--subtitles);
+  z-index: 100;
+  cursor: pointer;
+}
+
+#sidebar.open > #menu-arrow {
+  border-radius: 50% 0 0 50%;
+  rotate: 180deg;
 }
 
 .drop-down {
@@ -63,7 +117,7 @@ body {
 .nav-links li {
   padding: 6px 8px;
   border-top-left-radius: 6px;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 6px;
   font-size: var(--p-2);
   font-weight: 600;
   cursor: pointer;
@@ -142,7 +196,8 @@ main {
   width: 100%;
   height: 100%;
   padding: 1rem;
-  margin-bottom: 80px;
+  margin-top: 0.7rem;
+  margin-bottom: 100px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -166,18 +221,6 @@ main {
   display: none;
 }
 
-.drop-down-top > .caret {
-  scale: 1.6;
-  margin-right: 1rem;
-  border-top-color: var(--primary);
-}
-
-input[type="text"].task-title {
-  font-size: var(--subtitles);
-  font-weight: 600;
-  color: var(--primary);
-}
-
 /*
   Task Details:
     Sub Tasks
@@ -198,7 +241,7 @@ input[type="text"].task-title {
 
 .task-details {
   position: relative;
-  display: grid;
+  display: none;
   grid-template-columns: 1fr 7rem;
   transition: 0.3s ease;
   padding: 0 0.7rem;
@@ -207,6 +250,7 @@ input[type="text"].task-title {
 
 .task-details.menu-open {
   padding: 0.7rem;
+  display: grid;
 }
 
 .task-details::before {
@@ -231,7 +275,7 @@ input[type="text"].task-title {
   max-width: 60rem;
   justify-self: center;
   grid-column: 1 / -1;
-  padding: 1rem 2rem;
+  padding: 1rem var(--pad-2);
   display: grid;
   gap: 0.4rem;
 }
@@ -314,22 +358,6 @@ input[type="text"].task-title {
   border-radius: 8px;
 }
 
-.properties > .date > input[type="date"] {
-  position: absolute;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  overflow: hidden;
-}
-
-.properties > .date > input[type="date"]::-webkit-calendar-picker-indicator {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
 .task {
   position: relative;
   background: var(--secondary);
@@ -373,8 +401,8 @@ input[type="text"].task-title {
 .add-task {
   position: absolute;
   left: 50%;
-  top: calc(100% - 40px);
-  translate: -50% -50%;
+  bottom: 30px;
+  translate: -50%;
   width: 93%;
   border-radius: 6px;
   background-color: #48788e40;
@@ -411,6 +439,10 @@ main .task .properties *.disabled {
   grid-template-columns: 30px 1fr;
   align-items: center;
   gap: 6px;
+}
+
+.checkbox-before > *:last-child,
+.icon-before > *:last-child {
 }
 
 .icon-before i {
@@ -480,60 +512,24 @@ main .task .properties *.disabled {
   font-size: 14px;
 }
 
-input[type="text"] {
-  background-color: transparent;
-  outline: none;
-  border: none;
-  color: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-input[type="text"].add::placeholder,
-li.add i {
-  color: #fefefe55;
-}
-
-.add:focus-within > *,
-input[type="text"].add:focus::placeholder  {
-  color: #fefefeaa;
-}
-
-input[type="date"] {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  padding: 0.3rem;
-  color: var(--dark);
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-  background-color: var(--light);
-  color: var(--accent);
-  padding: 5px;
-  border-radius: 3px;
-}
-
-.add-task input[type="text"] {
-  position: relative;
-  background: transparent;
-  padding: 0.3rem;
-}
-
 .drop-down-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 100px 30px;
   padding: 0.7rem;
-  gap: 1rem;
+  gap: 0 1rem;
   align-items: center;
   cursor: pointer;
 }
 
-.drop-down-top > .checkbox-before {
-  width: 100%;
+.drop-down-top > .caret {
+  grid-area: 1 / -2 / -1 / -1;
+  scale: 1.6;
+  margin-right: 1rem;
+  border-top-color: var(--primary);
 }
 
-.drop-down-top > .checkbox-before > input[type="text"] {
-  flex: 1;
+.drop-down-top .related-project {
+  text-align: center;
 }
 
 .drop-down-top:hover {
@@ -563,21 +559,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
 }
 
-.menu-content > li:has([type="radio"]:not(:checked)) + li::before {
-  position: absolute;
-  width: 70%;
-  height: 1px;
-  content: '';
-  top: 0%;
-  left: 50%;
-  translate: -50% 0;
-  background-color: var(--primary);
-}
-
-.menu-content > li:has(input[type="radio"]:checked)::before {
-  background-color: transparent;
-}
-
 .menu-content > li:hover {
   background-color: #f6f1ee20;
 }
@@ -587,18 +568,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   left: 50%;
   translate: -50% -100%;
   background: var(--accent);
-}
-
-input[type="radio"]:not(.show) {
-  position: absolute;
-  opacity: 0;
-}
-
-input[type="radio"] + label {
-  width: 100%;
-  padding: 6px 8px;
-  text-align: center;
-  cursor: pointer;
 }
 
 /* Condensed small buttons */
@@ -644,43 +613,6 @@ i.delete:hover {
   color: var(--dark);
 }
 
-.add-task input[type="text"] ~ div {
-  position: relative;
-  justify-self: flex-end;
-  opacity: 0;
-  transition: 0.5s ease;
-  overflow: hidden;
-  width: 0%;
-}
-
-input[type="text"]:not(:read-only) {
-  pointer-events: auto;
-}
-
-.task input[type="text"]:not(:read-only) {
-  color: var(--accent);
-}
-
-.add-task input[type="text"]:not(:placeholder-shown) ~ div {
-  display: flex;
-  opacity: 1;
-  width: 100%;
-  overflow: visible;
-}
-
-.add-task input[type="text"] ~ div::after {
-  position: absolute;
-  width: 2px;
-  height: 100%;
-  content: "";
-  background: var(--primary);
-  border-radius: 2px;
-  top: 50%;
-  left: -0.5rem;
-  translate: 50% -50%;
-  z-index: 10;
-}
-
 .add-task .icon-useable:hover {
   color: var(--primary);
 }
@@ -695,29 +627,6 @@ li:has(input[type="radio"]:checked) {
 
 .task:has(.open) .fa-caret-down {
   rotate: -180deg;
-}
-
-/* Animations */
-/*
-  When deleting tasks minimize it with a pop effect.
-  The checkbox with a pop effect.
-*/
-
-/* Smaller Media Queries */
-@media (max-width: 40rem) {
-  :root {
-    --pad-1: 0.5rem;
-    --pad-2: 1rem;
-    --pad-3: 1.5rem;
-  }
-
-  .sidebar {
-    display: none;
-  }
-
-  .icon-before {
-
-  }
 }
 
 /*
@@ -763,6 +672,7 @@ li:has(input[type="radio"]:checked) {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem;
+  gap: 4px;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
@@ -846,6 +756,113 @@ li:has(input[type="radio"]:checked) {
   Input Styling
 */
 /*
+  Input Text
+*/
+input[type="text"] {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  width: 100%;
+}
+
+input[type="text"].add::placeholder,
+li.add i {
+  color: #fefefe55;
+}
+
+.add:focus-within > *,
+input[type="text"].add:focus::placeholder  {
+  color: #fefefeaa;
+}
+
+input[type="text"].task-title {
+  font-size: var(--subtitles);
+  font-weight: 600;
+  color: var(--primary);
+}
+
+input[type="text"]:not(:read-only) {
+  pointer-events: auto;
+}
+
+.task input[type="text"]:not(:read-only) {
+  color: var(--accent);
+}
+
+.add-task input[type="text"] {
+  position: relative;
+  background: transparent;
+  padding: 0.3rem;
+}
+
+/* Sibling and Children to Text Input */
+.add-task input[type="text"]:not(:placeholder-shown) ~ div {
+  display: flex;
+  opacity: 1;
+  width: 100%;
+  overflow: visible;
+}
+
+.add-task input[type="text"] ~ div::after {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  content: "";
+  background: var(--primary);
+  border-radius: 2px;
+  top: 50%;
+  left: -0.5rem;
+  translate: 50% -50%;
+  z-index: 10;
+}
+
+.add-task input[type="text"] ~ div {
+  position: relative;
+  justify-self: flex-end;
+  opacity: 0;
+  transition: 0.5s ease;
+  overflow: hidden;
+  width: 0%;
+}
+
+/*
+  Date Input
+*/
+input[type="date"] {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0.3rem;
+  color: var(--dark);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: var(--light);
+  color: var(--accent);
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.properties > .date > input[type="date"] {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.properties > .date > input[type="date"]::-webkit-calendar-picker-indicator {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/*
   Checkbox & Its Affected Text
 */
 .checkbox-before {
@@ -914,9 +931,6 @@ li:has(input[type="radio"]:checked) {
   cursor: pointer;
 }
 
-/* checked mark aspect changes */
-
-
 /* Checked box affect */
 [type="checkbox"]:checked + span:before {
   background-color: var(--accent);
@@ -943,4 +957,175 @@ li:has(input[type="radio"]:checked) {
 
 .drop-down-top:has(.main-checkbox:checked) + .task-details .sub-task span:after {
   opacity: 1;
+}
+
+/*
+  Radio input
+*/
+.menu-content > li:has(input[type="radio"]:checked)::before {
+  background-color: transparent;
+}
+
+input[type="radio"]:not(.show) {
+  position: absolute;
+  opacity: 0;
+}
+
+input[type="radio"] + label {
+  width: 100%;
+  padding: 6px 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu-content > li:has([type="radio"]:not(:checked)) + li::before {
+  position: absolute;
+  width: 70%;
+  height: 1px;
+  content: '';
+  top: 0%;
+  left: 50%;
+  translate: -50% 0;
+  background-color: var(--primary);
+}
+
+/* Smaller Media Queries */
+@media (max-width: 50rem) {
+  .sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 99;
+    padding: 2.5rem var(--pad-1);
+    padding-right: 0;
+  }
+  
+  .sidebar.open {
+    padding: 2.5rem var(--pad-1);
+  }
+
+  .nav-links li {
+    border-radius: 6px;
+  }
+  
+  .nav-links li.active {
+    background-color: var(--accent);
+    color: var(--light);
+    box-shadow: inset 1px 2px 5px #0a020170,
+    inset -1px -1px 3px #f6f1ee40;
+  }
+
+  .nav-links li.active .today-icon {
+    border-color: var(--light);
+  }
+
+  .nav-links li.active .today-icon::before {
+    background: var(--light);
+  }
+  
+  .nav-links li:hover:not(.active) {
+    background-color: var(--accent);
+  }
+
+  .properties > .date,
+  .dropdown {
+    min-width: 5rem;
+  }
+}
+@media (max-width: 40rem) {
+  :root {
+    --subtitles: 20px;
+    --p: 16px;
+    --p-2: 14px;
+    --pad-1: 0.5rem;
+    --pad-2: 1rem;
+    --pad-3: 1.5rem;
+  }
+
+  .list-container {
+    padding: 1rem 0;
+  }
+
+  .sidebar {
+    padding: 2.5rem var(--pad-1);
+    padding-right: 0;
+  }
+  
+  .sidebar.open {
+    padding: 2.5rem var(--pad-2);
+  }
+
+  .task-details {
+    grid-template-columns: 1fr;
+  }
+
+  .properties {
+    justify-content: center;
+  }
+
+  .btn-section {
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .btn-section > button {
+    width: 100px;
+    border-radius: 24px;
+    padding: 0.2rem 0.4rem;
+    font-size: var(--p-2);
+    font-weight: 600;
+  }
+
+  .drop-down-top {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+  }
+
+  .drop-down-top .related-project {
+    text-align: left;
+    padding: 0 0 0 2.7rem;
+    font-size: var(--small-2);
+  }
+
+  #add-task {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    grid-auto-flow: row;
+    gap: 6px;
+  }
+
+  #add-task:has(input[type="text"]:not(:placeholder-shown)) {
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  #add-task .small-btns {
+    width: 100%;
+    padding-left: 32px;
+    grid-area: 1 / 1 / 2 / -1;
+    justify-content: center;
+    transition: height 0s ease;
+  }
+
+  .add-task .small-btns {
+    height: 0;
+  }
+
+  .add-task input[type="text"]:not(:placeholder-shown) ~ .small-btns {
+    width: 100%;
+    height: 100%;
+  }
+
+  .add-task input[type="text"] ~ .small-btns::after {
+    position: absolute;
+    width: 80%;
+    height: 2px;
+    content: "";
+    background: var(--primary);
+    border-radius: 2px;
+    top: 100%;
+    left: 50%;
+    translate: -50% 50%;
+    z-index: 10;
+    }
 }

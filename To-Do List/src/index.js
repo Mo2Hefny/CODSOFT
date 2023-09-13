@@ -52,3 +52,9 @@ function updateDay() {
 }
 
 updateDay();
+
+document.getElementById('menu-arrow').addEventListener('click', toggleSideBar);
+function toggleSideBar() {
+  const sideBar = document.getElementById('sidebar');
+  sideBar.classList.toggle('open');
+}
