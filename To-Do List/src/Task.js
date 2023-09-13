@@ -1,4 +1,4 @@
-import { compareAsc, format } from 'date-fns'
+import { compareAsc, format, formatDistance } from 'date-fns'
 
 export class Task {
   #title;
@@ -19,7 +19,7 @@ export class Task {
 
   constructor(title, date, priority, repetition, relation, id) {
     this.#createDate = format(new Date(), 'dd-MM-yyyy')
-    this.#dueDate = (isNaN(date)) ? "None" : format(date, 'dd-MM-yyyy')
+    this.#setDate(date, repetition);
     this.#title = title;
     this.#priority = priority;
     this.#repetition = repetition;
@@ -27,8 +27,44 @@ export class Task {
     this.#subTaskArray = [];
     console.log(this.#dueDate);
     this.#createTaskElement();
+    this.#updateDatePickerValue();
     this.deleted = false;
     this.id = id;
+  }
+
+  #setDate(date, repetition) {
+    console.log(`Due: ${date} & Repeated ${repetition}`);
+    console.log(isNaN(date));
+    if (isNaN(date) && repetition != 'Once')
+      date = new Date();
+    this.#dueDate =  (isNaN(date)) ? 'None' : format(date, 'dd-MM-yyyy');
+  }
+  
+  getDays() {
+    if (this.#dueDate === 'None') return -1;
+    const dateArray = this.#dueDate.split('-');
+    const dueDate = new Date(`${dateArray[1]}-${dateArray[0]}-${dateArray[2]}`);
+    const today = new Date(format(new Date(), 'MM-dd-yyyy'));
+    console.log(dueDate);
+    console.log(today);
+    const diff = (dueDate - today) / 1000;
+    console.log(diff);
+    return diff / (3600 * 24);
+  }
+
+  getRelatedProject() {
+    return this.#relation;
+  }
+
+  #getDateString() {
+    if (this.#dueDate === 'None') return 'None';
+    const dateArray = this.#dueDate.split('-');
+    const dueDate = new Date(`${dateArray[1]}-${dateArray[0]}-${dateArray[2]}`);
+    const days = this.getDays();
+    if (days > 7) return this.#dueDate;
+    if (days < 2) return days ? 'Tomorrow' : 'Today';
+    const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    return `Next ${weekday[dueDate.getDay()]}`;
   }
 
   #createTaskElement() {
@@ -39,24 +75,26 @@ export class Task {
     this.#titleEl = document.createElement('input');
     this.#titleEl.setAttribute('type', 'text');
     this.#titleEl.setAttribute('readonly', true);
+    this.#titleEl.setAttribute('spellcheck', false);
+    this.#titleEl.setAttribute('data-ms-editor', true);
     this.#titleEl.setAttribute('value', this.#title);
     this.#titleEl.classList.add('task-title');
     this.#titleEl.classList.add('checkbox-text');
-    console.log(this.#titleEl);
     const top = document.createElement('div');
     top.classList.add('drop-down-top');
     top.innerHTML = `<div class="checkbox-before">
-                      <input type="checkbox" name="task1" id="task1" />
+                      <input class="main-checkbox" type="checkbox" name="task1" id="task1" />
                       <span></span>
-                      ${this.#titleEl.outerHTML}
                     </div>
+                    <p class="related-project">${this.#relation}</p>
                     <div class="caret"></div>`;
-
+    top.firstElementChild.appendChild(this.#titleEl);
     // Bottom section
     const bottom = document.createElement('div');
     bottom.classList.add('task-details');
     bottom.classList.add('dropdown-menu');
-    top.addEventListener('click', () => {
+    top.addEventListener('click', (event) => {
+      if (event.target.hasAttribute('type', 'checkbox'))  return;
       bottom.classList.toggle('menu-open');
       top.querySelector('.caret').classList.toggle('caret-rotate');
     })
@@ -74,10 +112,11 @@ export class Task {
       editBtn.textContent = 'Save';
       if (editBtn.classList.contains('edit')) {
         editBtn.textContent = 'Edit';
-        this.#updateTask();
+        this.#closeMenus();
       }
       editBtn.classList.toggle('edit');
       this.#editTask();
+      this.#updateTask();
     });
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('btn-color-2');
@@ -99,7 +138,7 @@ export class Task {
     this.#dateEl = document.createElement('div');
     this.#dateEl.innerHTML = `
     <input type="date" name="due-date">
-    <p>${this.#dueDate}</p>`;
+    <p>${this.#getDateString()}</p>`;
     this.#dateEl.classList.add('date');
     this.#dateEl.classList.add('property');
     this.#dateEl.classList.add('disabled');
@@ -163,14 +202,16 @@ export class Task {
       });
     
       options.forEach(option => {
-        selected.textContent = option.textContent;
-        select.classList.remove('select-clicked');
-        caret.classList.remove('caret-rotate');
-        menu.classList.remove('menu-open');
-        options.forEach(option => {
-          option.classList.remove('active');
+        option.addEventListener('click', () => {
+          selected.textContent = option.textContent;
+          select.classList.remove('select-clicked');
+          caret.classList.remove('caret-rotate');
+          menu.classList.remove('menu-open');
+          options.forEach(option => {
+            option.classList.remove('active');
+          });
+          option.classList.add('active');
         });
-        option.classList.add('active');
       })
     });
 
@@ -178,7 +219,15 @@ export class Task {
   }
 
   #closeMenus() {
-
+    const dropDowns = this.taskEl.querySelectorAll('.dropdown');
+    dropDowns.forEach(dropDown => {
+      const select = dropDown.querySelector('.select');
+      const caret = dropDown.querySelector('.caret');
+      const menu = dropDown.querySelector('.menu');
+      select.classList.remove('select-clicked');
+      caret.classList.remove('caret-rotate');
+      menu.classList.remove('menu-open');
+    });
   }
 
   #createSubTasksSection() {
@@ -204,18 +253,22 @@ export class Task {
     this.#repetitionEl.firstElementChild.classList.toggle('disabled');
   }
 
+  #updateDatePickerValue() {
+    const dateArray = this.#dueDate.split('-');
+    this.#dateEl.firstElementChild.value = (this.#dueDate === 'None') ? '' : `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
+  }
+
   #updateDate() {
-    let date = new Date(this.#dateEl.firstElementChild.value);
-    date = (isNaN(date)) ? "None" : format(date, 'dd-MM-yyyy');
-    console.log(date);
-    this.#dateEl.lastElementChild.textContent = date;
+    this.#setDate(new Date(this.#dateEl.firstElementChild.value), this.#repetition);
+    this.#dateEl.lastElementChild.textContent = this.#getDateString();
   }
 
   #updateTask() {
     this.#title = this.#titleEl.value;
-    this.#dueDate = this.#dateEl.querySelector('p').textContent;
     this.#priority = this.#priorityEl.querySelector('.selected').textContent;
     this.#repetition = this.#repetitionEl.querySelector('.selected').textContent;
+    this.#updateDate();
+    console.log(`${this.#titleEl} ${this.#priority} ${this.#repetition} ${this.#dueDate}`);
   }
 
   addSubTask() {
@@ -244,5 +297,33 @@ export class Task {
     this.deleted = true;
     console.log(this.taskEl);
     this.taskEl.parentNode.removeChild(this.taskEl);
+  }
+
+  handleChecked() {
+    const checkbox = this.taskEl.querySelector('.main-checkbox');
+    if (!checkbox.checked) return true;
+    if (this.#repetition === 'Once') {
+      this.deleteTask();
+      return false;
+    }
+    this.#handleTaskRepetition();
+    checkbox.checked = false;
+    return true;
+  }
+
+  #handleTaskRepetition() {
+    console.log(`Past task date: ${this.#dueDate}`);
+    const dateArray = this.#dueDate.split('-');
+    const dueDate = new Date(`${dateArray[1]}-${dateArray[0]}-${dateArray[2]}`);
+    switch (this.#repetition) {
+      case 'Daily': dueDate.setDate(dueDate.getDate() + 1); break;
+      case 'Weekly': dueDate.setDate(dueDate.getDate() + 7); break;
+      case 'Monthly': dueDate.setMonth(dueDate.getMonth() + 1); break;
+      case 'Yearly': dueDate.setFullYear(dueDate.getFullYear() + 1); break;
+    }
+    this.#setDate(dueDate, this.#repetition);
+    this.#updateDatePickerValue();
+    this.#dateEl.lastElementChild.textContent = this.#getDateString();
+    console.log(`Current task date: ${this.#dueDate}`);
   }
 }

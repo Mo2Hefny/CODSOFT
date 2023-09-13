@@ -51,6 +51,23 @@ document.getElementById('new-task-title').addEventListener('keyup', (event) => {
   if (event.key === 'Enter')  TODO.addTask();
 });
 
+// Add SideBar Traverse
+const links = document.querySelectorAll('.nav-links li:not(.add)');
+links.forEach(link => {
+  link.addEventListener('click', () => {
+    const links = document.querySelectorAll('.nav-links li');
+    links.forEach(link => {
+      link.classList.remove('active');
+    })
+    link.classList.add('active');
+    TODO.updateTODOlist();
+  })
+});
+TODO.updateTODOlist();
+
+// Refresh icon functionality
+document.getElementById('refresh').addEventListener('click', TODO.refreshTODOList)
+
 function updateDay() {
   const date = new Date();
   const day = date.getDate(); // getDay() returns day of the week number.

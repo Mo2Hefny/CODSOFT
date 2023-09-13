@@ -73,7 +73,12 @@ body {
   margin: 4px 0;
 }
 
-.nav-links li:hover {
+.nav-links li.active {
+  background-color: var(--light);
+  color: var(--dark);
+}
+
+.nav-links li:hover:not(.active) {
   background-color: var(--accent);
 }
 
@@ -97,7 +102,27 @@ main {
 
 .list-header {
   position: relative;
-  height: 150px;
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#refresh {
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#refresh:hover {
+  rotate: 360deg;
+}
+
+.list-header > .list-title {
+  display: flex;
+  gap: 1rem;
+  font-size: var(--h1);
+  font-weight: 700;
 }
 
 .list-header::after {
@@ -132,7 +157,16 @@ main {
   translate: -50%;
 }
 
-.task .caret {
+#empty-list-header {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+#empty-list-header:not(:only-child) {
+  display: none;
+}
+
+.drop-down-top > .caret {
   scale: 1.6;
   margin-right: 1rem;
   border-top-color: var(--primary);
@@ -150,6 +184,17 @@ input[type="text"].task-title {
     Properties
     Buttons
 */
+
+.related-project {
+  color: #0a020170;
+  font-size: var(--p);
+  padding: 0.5rem;
+  opacity: 0.5;
+}
+
+.related-project:hover {
+  opacity: 1;
+}
 
 .task-details {
   position: relative;
@@ -372,11 +417,36 @@ main .task .properties *.disabled {
   position: absolute;
   width: 65%;
   height: 2px;
+  border-radius: 4px;
   content: "";
   background: var(--light);
   left: 50%;
   top: 20%;
   translate: -50% -50%;
+}
+
+.active .today-icon {
+  border-color: var(--dark);
+}
+
+.active .today-icon::before {
+  background-color: var(--dark);
+}
+
+.list-title > .today-icon {
+  border: 3px solid var(--dark);
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.list-title > .today-icon::before {
+  height: 3px;
+  background: var(--dark);
+}
+
+.list-title .today-day {
+  font-size: 14px;
 }
 
 input[type="text"] {
@@ -396,89 +466,6 @@ li.add i {
 .add:focus-within > *,
 input[type="text"].add:focus::placeholder  {
   color: #fefefeaa;
-}
-
-.checkbox-before {
-  position: relative;
-  display: flex;
-  padding: 4px;
-}
-
-[type="checkbox"],
-[type="checkbox"]:checked {
-  position: absolute;
-  top: 50%;
-  left: 1rem;
-  translate: -50% -50%;
-  z-index: 5;
-  opacity: 0;
-  -ms-transform: scale(1.5); /* IE */
-  -moz-transform: scale(1.5); /* FF */
-  -webkit-transform: scale(1.5); /* Safari and Chrome */
-  -o-transform: scale(1.5); /* Opera */
-  transform: scale(1.5);
-}
-
-[type="checkbox"] ~ * {
-  position: relative;
-  padding-left: 1.2rem;
-  cursor: pointer;
-}
-
-/* checkbox aspect */
-[type="checkbox"] + span:before {
-  position: absolute;
-  content: "";
-  width: 0.8rem;
-  height: 0.8rem;
-  border: 2px solid var(--primary);
-  border-radius: 3px;
-  left: 0.7rem;
-  top: 50%;
-  translate: -50% -50%;
-  transition: 0.2s ease;
-}
-
-[type="checkbox"]:checked + span:before {
-  background-color: var(--accent);
-}
-
-/* checked mark aspect */
-[type="checkbox"] + span:after {
-  position: absolute;
-  content: "✔";
-  font-size: 11px;
-  color: var(--light);
-  line-height: 0;
-  width: 0.7rem;
-  height: 0.7rem;
-  left: 0.7rem;
-  top: 50%;
-  translate: -50% -50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* checked mark aspect changes */
-[type="checkbox"]:not(:checked) + span:after {
-  opacity: 0;
-}
-
-[type="checkbox"]:checked + span:after {
-  opacity: 1;
-}
-
-/* Accessibility */
-[type="checkbox"]:hover + span:before {
-  box-shadow: 0 0 3px 3px #264e6440;
-  scale: 1.1;
-}
-
-[type="checkbox"]:checked ~ .checkbox-text {
-  text-decoration: line-through;
-  text-decoration-thickness: 2px;
-  color: #0a020170;
 }
 
 input[type="date"] {
@@ -506,9 +493,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   padding: 0.7rem;
   gap: 1rem;
-  justify-content: space-between;
   align-items: center;
   cursor: pointer;
+}
+
+.drop-down-top > .checkbox-before {
+  width: 100%;
+}
+
+.drop-down-top > .checkbox-before > input[type="text"] {
+  flex: 1;
 }
 
 .drop-down-top:hover {
@@ -597,6 +591,15 @@ input[type="radio"] + label {
 }
 
 /* Effects */
+i.delete {
+  transition: 0.3s;
+}
+
+i.delete:hover {
+  color: #e25e35;
+  scale: 1.1;
+}
+
 .icon-useable {
   transition: 0.3s ease;
 }
@@ -617,6 +620,14 @@ input[type="radio"] + label {
   transition: 0.5s ease;
   overflow: hidden;
   width: 0%;
+}
+
+input[type="text"]:not(:read-only) {
+  pointer-events: auto;
+}
+
+.task input[type="text"]:not(:read-only) {
+  color: var(--accent);
 }
 
 .add-task input[type="text"]:not(:placeholder-shown) ~ div {
@@ -803,3 +814,102 @@ li:has(input[type="radio"]:checked) {
 /*
   Input Styling
 */
+/*
+  Checkbox & Its Affected Text
+*/
+.checkbox-before {
+  position: relative;
+  display: flex;
+  padding: 4px;
+}
+
+[type="checkbox"],
+[type="checkbox"]:checked {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  translate: -50% -50%;
+  z-index: 5;
+  opacity: 0;
+  -ms-transform: scale(1.5); /* IE */
+  -moz-transform: scale(1.5); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+[type="checkbox"] ~ * {
+  position: relative;
+  padding-left: 1.2rem;
+  pointer-events: none;
+}
+
+/* checkbox aspect */
+[type="checkbox"] + span:before {
+  position: absolute;
+  content: "";
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 2px solid var(--primary);
+  border-radius: 3px;
+  left: 0.7rem;
+  top: 50%;
+  translate: -50% -50%;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+[type="checkbox"]:hover + span:before {
+  box-shadow: 0 0 3px 3px #264e6440;
+  scale: 1.1;
+}
+
+/* checked mark aspect */
+[type="checkbox"] + span:after {
+  position: absolute;
+  content: "✔";
+  font-size: 11px;
+  color: var(--light);
+  line-height: 0;
+  width: 0.7rem;
+  height: 0.7rem;
+  left: 0.7rem;
+  top: 50%;
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* checked mark aspect changes */
+
+
+/* Checked box affect */
+[type="checkbox"]:checked + span:before {
+  background-color: var(--accent);
+}
+
+[type="checkbox"]:not(:checked) + span:after {
+  opacity: 0;
+}
+
+[type="checkbox"]:checked + span:after {
+  opacity: 1;
+}
+
+[type="checkbox"]:checked ~ .checkbox-text,
+.drop-down-top:has(.main-checkbox:checked) + .task-details .sub-task  .checkbox-text{
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  color: #0a020170;
+}
+
+.drop-down-top:has(.main-checkbox:checked) + .task-details .sub-task span:before {
+  background-color: var(--accent);
+}
+
+.drop-down-top:has(.main-checkbox:checked) + .task-details .sub-task span:after {
+  opacity: 1;
+}

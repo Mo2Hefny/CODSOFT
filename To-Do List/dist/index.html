@@ -18,7 +18,7 @@
       </div>
       <div class="group">
         <ul class="nav-links" id="date-sort">
-          <li class="icon-before">
+          <li class="icon-before active" id="inbox">
             <i class="fa-solid fa-inbox fa-xl"></i>
             <span>Inbox</span>
           </li>
@@ -39,11 +39,11 @@
         </div>
         <ul class="nav-links" id="projects">
           <li class="icon-before">
-            <i class="fa-solid fa-square-minus"></i>
+            <i class="fa-solid fa-square-minus delete"></i>
             <span>CodSoft</span>
           </li>
           <li class="icon-before">
-            <i class="fa-solid fa-square-minus"></i>
+            <i class="fa-solid fa-square-minus delete"></i>
             <span>CodeGraph</span>
           </li>
           <li class="add icon-before" id="add-project">
@@ -61,71 +61,13 @@
     </aside>
     <main>
       <header class="list-header">
-        <h1 class="title" id="sort-type"></h1>
-        <div class="icon drop-down-menu" id="sort-filter"></div>
+        <div class="icon-before list-title" id="sort-type">
+        </div>
+        <i class="fa-solid fa-rotate-right fa-2xl" id="refresh"></i>
       </header>
       <div class="list-container">
         <ul class="tasks-list" id="tasks">
-          <li class="task">
-            <div
-              class="drop-down-top"
-              onclick="DOM_Handler.toggleMenu(this.nextElementSibling)"
-            >
-              <div class="checkbox-before">
-                <input type="checkbox" name="task1" id="task1" />
-                <span></span>
-                <input type="text" value="test" readonly class="task-title checkbox-text" />
-              </div>
-              <div class="caret"></div>
-            </div>
-            <div class="task-details dropdown-menu menu-open">
-              <ul class="sub-tasks-list">
-                <li class="add icon-before" id="add-project">
-                  <i class="fa-solid fa-plus fa-lg icon-useable"></i>
-                  <input
-                    class="add"
-                    type="text"
-                    placeholder="Add Sub Task"
-                    minlength="1"
-                  />
-                </li>
-              </ul>
-              <div class="properties">
-                <div class="date property">
-                  <input type="date" name="due-date">
-                  <p>9 - 11 - 2023</p>
-                </div>
-                <div class="dropdown priority">
-                  <div class="select">
-                    <span class="selected">Medium</span>
-                    <div class="caret"></div>
-                  </div>
-                  <ul class="menu down">
-                    <li>Hard</li>
-                    <li>Medium</li>
-                    <li>Low</li>
-                  </ul>
-                </div>
-                <div class="dropdown">
-                  <div class="select disabled">
-                    <span class="selected">Medium</span>
-                    <div class="caret"></div>
-                  </div>
-                  <ul class="menu down">
-                    <li>Once</li>
-                    <li>Daily</li>
-                    <li>Weekly</li>
-                    <li>Monthly</li>
-                    <li>Yearly</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="btn-section">
-                <button class="btn-color-1 edit">Edit</button>
-                <button class="btn-color-2 delete">Delete</button>
-              </div>
-            </div>
-          </li>
+          <h1 id="empty-list-header">Nothing to do, hooray! 🎉</h1>
         </ul>
       </div>
       <div class="add-task icon-before" id="add-task">
@@ -148,7 +90,7 @@
                   type="radio"
                   id="high"
                   name="create-priority"
-                  value="hard"
+                  value="Hard"
                 />
                 <label for="high">High</label><br />
               </li>
@@ -157,7 +99,7 @@
                   type="radio"
                   id="medium"
                   name="create-priority"
-                  value="medium"
+                  value="Medium"
                   checked
                 />
                 <label for="medium">Medium</label><br />
@@ -167,7 +109,7 @@
                   type="radio"
                   id="low"
                   name="create-priority"
-                  value="low"
+                  value="Low"
                 />
                 <label for="low">Low</label>
               </li>
@@ -183,7 +125,7 @@
                   type="radio"
                   id="daily"
                   name="create-repetition"
-                  value="daily"
+                  value="Daily"
                 />
                 <label for="daily">Daily</label><br />
               </li>
@@ -192,7 +134,7 @@
                   type="radio"
                   id="weekly"
                   name="create-repetition"
-                  value="weekly"
+                  value="Weekly"
                 />
                 <label for="weekly">Weekly</label>
               </li>
@@ -201,7 +143,7 @@
                   type="radio"
                   id="monthly"
                   name="create-repetition"
-                  value="monthly"
+                  value="Monthly"
                 />
                 <label for="monthly">Monthly</label>
               </li>
@@ -210,7 +152,7 @@
                   type="radio"
                   id="yearly"
                   name="create-repetition"
-                  value="yearly"
+                  value="Yearly"
                 />
                 <label for="yearly">Yearly</label>
               </li>
@@ -219,7 +161,7 @@
                   type="radio"
                   id="once"
                   name="create-repetition"
-                  value="once"
+                  value="Once"
                   checked
                 />
                 <label for="once">Once</label>
@@ -236,7 +178,7 @@
                   type="radio"
                   id="general"
                   name="create-relation"
-                  value="general"
+                  value="General"
                   checked
                 />
                 <label for="general">General</label>
