@@ -8,6 +8,10 @@ export const TODO = (() => {
   let tasksArray = [];
   let projectsArray = [];
 
+  const sortTasks = () => {
+    tasksArray.sort((a, b) => { return a.getDays() - b.getDays();})
+  }
+
   const addTask = () => {
     numberOfTasks++;
     console.log('adding task...');
@@ -28,6 +32,7 @@ export const TODO = (() => {
       TODO.deleteTask(task);
     });
     tasksArray.push(task);
+    sortTasks();
     console.log(tasksArray);
     updateTasksList();
     //DOM_Handler.createTask(title, date, priority, repetition, relation);
@@ -129,6 +134,7 @@ export const TODO = (() => {
       if (!task.handleChecked())
         deleteTask(task);
     });
+    sortTasks();
     updateTasksList();
   }
 

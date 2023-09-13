@@ -41,7 +41,7 @@ export class Task {
   }
   
   getDays() {
-    if (this.#dueDate === 'None') return -1;
+    if (this.#dueDate === 'None') return Number.MAX_VALUE;
     const dateArray = this.#dueDate.split('-');
     const dueDate = new Date(`${dateArray[1]}-${dateArray[0]}-${dateArray[2]}`);
     const today = new Date(format(new Date(), 'MM-dd-yyyy'));
